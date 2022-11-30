@@ -1,0 +1,55 @@
+{
+    "python.venvPath": "~/.conda/envs/",
+    "coc.preferences.useQuickfixForLocations": true,
+    "suggest.noselect": true,
+    "python.formatting.blackArgs": [
+        "--line-length=120"
+    ],
+    "python.formatting.provider": "black",
+    "python.sortImports.args": [ "--profile", "black" ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [ "--max-line-length=120" ],
+    "python.linting.pydocstyleEnabled": true,
+    "python.linting.pydocstyleArgs": [
+        "--convention=google",
+        "--ignore=D100,D104"
+    ],
+    "python.linting.mypyEnabled": true,
+    "python.linting.banditEnabled": true,
+    "python.linting.banditArgs": [
+        "-s B101"
+    ],
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
+    "yaml.format.enable": true,
+    "languageserver": {
+        "nix": {
+            "command": "rnix-lsp",
+            "filetypes": [
+                "nix"
+            ]
+        },
+        "rust": {
+            "command": "rust-analyzer",
+            "filetypes": [
+                "rust"
+            ],
+            "rootPatterns": [
+                "Cargo.toml"
+            ]
+        },
+        "sql": {
+            "command": "sql-language-server",
+            "args": [
+                "up",
+                "--method",
+                "stdio"
+            ],
+            "filetypes": [
+                "sql",
+                "mysql"
+            ]
+        }
+    },
+    "svelte.enable-ts-plugin": false,
+    "svelte.ask-to-enable-ts-plugin": false
+}

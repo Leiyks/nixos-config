@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 # Polybar
 let
-  theme = ../assets/polybar/bapt-forest-theme;
+  theme = ../configuration/polybar-laptop-theme;
 in
 {
   services.polybar = {

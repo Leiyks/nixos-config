@@ -3,39 +3,38 @@
 {
   programs.git = {
     enable = true;
-    aliases = {
-      st = "status";
-      sw = "switch";
-      sc = "switch -c";
-      b = "branch";
-      cb = "checkout -b";
-      ch = "checkout";
-      mgt = "mergetool";
-      pushft = "push --follow-tags";
-      pushwl = "push --force-with-lease";
-      pushff = "push --force";
-      alog = "log --oneline --graph --all --decorate";
-      tlog = "log --oneline --graph --decorate -n 15";
-      nlog = "log --oneline --graph --decorate";
-    };
 
-    userName = "Baptiste Bourdet";
-    userEmail = "baptiste.bourdet@epita.fr";
+    userName = "Alexandre Rulleau";
+    userEmail = "alexandre.rulleau@epita.fr";
 
     extraConfig = {
-      push.merge = true;
+      pull.ff = "only";
+
+      push = {
+        default = "simple";
+        merge = true;
+      };
+
       commit.verbose = true;
+
       rebase = {
         autoStash = true;
         autoSquash = true;
       };
+
       merge.tool = "fugitive";
       mergetool."fugitive" = ''vim -f -c '"set nocursorline"' -c '":set wrap"' -c "Gvdiffsplit!" "$MERGED"'';
+
       core = {
+        # Default editor
         editor = "vim";
+        # Handle the CRLF convertion on commit
         autocrlf = "input";
+        # Make git warn you about whitespace issues
+        whitespace = "warn,trailing-space,tab-in-indent";
       };
-      pull.ff = "only";
+
+      log.abbrevCommit = true;
     };
   };
 }

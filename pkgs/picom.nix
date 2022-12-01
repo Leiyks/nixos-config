@@ -6,8 +6,6 @@
 
     backend = "xrender";
 
-    extraArgs = [ ];
-
     vSync = true;
 
     wintypes = {

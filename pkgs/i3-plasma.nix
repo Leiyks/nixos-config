@@ -9,12 +9,12 @@
 {
   # Files to include in the home
   home.file.".background-image" = {
-    source = ../assets/wallpapers/forest-botw.jpg;
+    source = ../configuration/laptop_wallpaper.jpg;
   };
   # We add this file to disable the systemBoot option to allow i3 to replace
   # KNWM
   home.file.".config/startkderc" = {
-    source = ../assets/config/kde/i3-plasma/startkderc;
+    source = ../configuration/startkderc;
   };
 
   xsession.enable = true;
@@ -133,7 +133,7 @@
 
       startup = [
         {
-          command = "${pkgs.feh}/bin/feh --bg-scale ${../assets/wallpapers/forest-botw.jpg}";
+          command = "${pkgs.feh}/bin/feh --bg-scale ${../configuration/laptop_wallpaper.jpg}";
           always = true;
           notification = false;
         }

@@ -10,32 +10,22 @@
     ./hardware-configuration.nix
   ];
 
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  # Grub Bootloader.
+  boot.loader.grub =
+    {
+      enable = true;
+      version = 2;
+      theme = pkgs.nixos-grub2-theme;
+      device = "/dev/sda";
+      useOSProber = true;
+      enableCryptodisk = true;
+      configurationLimit = 5;
+    };
 
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
-    '';
-  };
-
-  krb5 = {
-    enable = true;
-    config = ''
-    [libdefaults]
-    	default_realm = ATHENA.MIT.EDU
-    	forwardable = true
-    	rdns = false
-
-    [realms]
-    	CRI.EPITA.FR = {
-    		admin_server = kerberos.pie.cri.epita.fr
-    	}
-
-    # [domain_realm]
     '';
   };
 
@@ -53,16 +43,12 @@
     terminus_font_ttf
     terminus-nerdfont
     font-awesome
-    (nerdfonts.override { fonts = [ "Iosevka" "Terminus" ]; })
     siji
+    (nerdfonts.override { fonts = [ "Iosevka" "Terminus" ]; })
   ];
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # Define your hostname.
+  networking.hostName = "nixos";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -90,11 +76,11 @@
     enable = true;
     displayManager = {
       sddm.enable = true;
-      defaultSession = "plasma5+i3+bapt";
+      defaultSession = "plasma5+i3+leiyks";
       session = [
         {
           manage = "desktop";
-          name = "plasma5+i3+bapt";
+          name = "plasma5+i3+leiyks";
           start = ''
             env KDEWM=${pkgs.i3-gaps}/bin/i3 ${pkgs.plasma-workspace}/bin/startplasma-x11
           '';
@@ -106,8 +92,7 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    layout = "fr,us";
   };
 
   # Enable CUPS to print documents.
@@ -122,30 +107,20 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
+    jack.enable = true;
   };
 
   # Docker
   virtualisation.docker.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.baptman = {
+  users.users.leiyks = {
     isNormalUser = true;
-    description = "baptman";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      firefox
-      kate
-      #  thunderbird
-    ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "audio" "lp" ];
+    initialPassword = "password";
   };
 
   # Allow unfree packages
@@ -154,7 +129,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
+    git
+    firefox
     wget
   ];
 

@@ -1,28 +1,30 @@
 { config, pkgs, ... }:
 # Packages to install
 {
-  home.packages = [
+  home.packages = with pkgs; [
     # Shell utilities
-    pkgs.tree
-    pkgs.bat
+    tree
+    bat
 
     # Node
-    pkgs.nodejs
+    nodejs
 
     # Nix formatter
-    pkgs.nixpkgs-fmt
-    pkgs.rnix-lsp
+    nixpkgs-fmt
+    rnix-lsp
 
     # yaml formatter
-    pkgs.nodePackages.markdownlint-cli
+    nodePackages.markdownlint-cli
 
     # Json
-    pkgs.jq
+    jq
 
     # Python
-    pkgs.poetry
-    pkgs.python310
+    poetry
+    python310
 
-    pkgs.google-chrome
+    brave
+    discord
+    slack
   ];
 }

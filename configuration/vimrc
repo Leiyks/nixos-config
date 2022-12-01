@@ -1,0 +1,445 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Description:
+"   This is my vimrc file !
+"   In order to have everything working fine, i recommand installing any
+"   version as long as they are not the lightweight ones.
+"
+" Maintainer:
+"   Alexandre "Leiyks" Rulleau
+"   <alexandre.rulleau@epita.fr>
+"
+" Acknowledgments:
+"   A big part of this configuration was done copying the followings vimrc files, with few personnal modifications:
+"   https://github.com/zuh0/vimfiles/blob/master/vimrc
+"   https://github.com/Chewie/dotfiles/blob/master/vim/.vimrc
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+" {{{ Plugins
+
+" Load the plug.vim file from github
+if empty(glob("~/.vim/autoload/plug.vim"))
+    " Ensure all needed directories exist then download the plugin manager
+    execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+call plug#begin('~/.vim/plugged')
+
+" Bag of mappings
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'preservim/nerdcommenter'
+Plug 'junegunn/vim-easy-align'
+
+" Navigation
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-obsession'
+
+" Theming
+Plug 'nanotech/jellybeans.vim'
+Plug 'itchyny/lightline.vim'
+
+" Filetype specific plugins
+Plug '5long/pytest-vim-compiler'
+Plug 'LnL7/vim-nix'
+
+" 'IDE' features
+Plug 'ap/vim-css-color'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'
+Plug 'janko/vim-test'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+call plug#end()
+
+" Run PlugInstall if there are missing plugins
+if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Enable filetype detection for plugins and indentation options
+filetype plugin indent on
+
+" Reload a file when it is changed from the outside
+set autoread
+
+" Write the file when we leave the buffer
+set autowrite
+
+" Force encoding to utf-8
+set encoding=utf-8
+set fenc=utf-8
+set termencoding=utf-8
+
+" Hide buffers instead of closing them
+set hidden
+
+" Set the time (in milliseconds) spent idle until various actions occur
+" In this configuration, it is particularly useful for the tagbar plugin
+set updatetime=100
+
+" For some stupid reason, vim requires the term to begin with 'xterm', so the
+" automatically detected 'rxvt-unicode-256color' doesn't work.
+set term=xterm-256color
+
+" remove the check of included files for the auto complete
+set complete-=i
+
+" }}} !Plugins
+
+" {{{ UI
+
+" Make backspace behave as expected
+set backspace=eol,indent,start
+
+" Set the minimal amount of lignes under and above the cursor
+" Useful for keeping context when moving with j/k
+set scrolloff=10
+set sidescrolloff=5
+
+" Add lastine to display
+set display+=lastline
+
+" Do not show current mode, it is done with lightline
+set noshowmode
+
+" Show command being executed
+set showcmd
+
+" Show line number
+set number
+
+" Always show status line
+set laststatus=2
+
+" Enhance command line completion
+set wildmenu
+
+" Set completion behavior, see :help wildmode for details
+set wildmode=longest:full,list:full
+
+" Disable bell completely
+set visualbell
+set t_vb=
+set belloff=all
+
+" Add info to statusline
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Color the column after textwidth, usually the 80th
+set colorcolumn=+1
+
+" Display trailing Whitespaces
+set list
+set listchars=trail:¬
+
+" Enables syntax highlighting
+syntax on
+
+" Enable Doxygen highlighting
+let g:load_doxygen_syntax=1
+
+" Allow mouse use in vim
+set mouse=a
+
+" Enable line wrapping
+set wrap
+set linebreak
+
+" Allow keys to move to the next line
+set whichwrap=b,s,<,>,h,l
+
+" Wrap on column 80
+set textwidth=79
+set cc=80
+
+" Disable preview window on completion
+set completeopt=longest,menuone
+
+" Highlight current line
+set cursorline
+
+" Set easy buffer switch
+set swb=useopen,vsplit
+
+" Make better split screen's
+set splitright
+set splitbelow
+
+" Adapt to python files
+autocmd Filetype python setlocal cc=120 textwidth=119
+
+" }}} !UI
+
+" {{{ Search{{{}}}
+
+" Ignore case on search
+set ignorecase
+
+" Ignore case unless there is an uppercase letter in the pattern
+set smartcase
+
+" Move cursor to the matched string
+set incsearch
+
+" Highlight matched strings
+set hlsearch
+
+" Add all directory and sub-directory to path for find
+set path+=**
+
+" Merge signcolumn and column into one
+set signcolumn=auto
+
+" }}} !Search
+
+" {{{ Indentation
+
+" The length of a tab
+set tabstop=8
+
+" The number of spaces inserted/removed when using < or >
+set shiftwidth=4
+
+" The number of spaces inserted when you press tab.
+" -1 means the same value as shiftwidth
+set softtabstop=-1
+
+" Insert spaces instead of tabs
+set expandtab
+
+" When tabbing manually, use shiftwidth instead of tabstop and softtabstop
+set smarttab
+set smartindent
+
+" Set basic indenting (i.e. copy the indentation of the previous line)
+" When filetype detection didn't find a fancy indentation scheme
+set autoindent
+
+" When shifting, round the indentation to a multiple of shiftwidth
+set shiftround
+
+" This one is complicated. See :help cinoptions-values for details
+set cinoptions=(0,u0,U0,t0,g0,N-s
+
+" Delete comment character when joining commented lines
+set formatoptions+=j
+
+" }}} !Indentation
+
+" {{{ Mapping
+
+" ----- General mappings ----- "
+
+" Set ',' as map leader
+let mapleader = ","
+
+" Toggle paste mode
+noremap <leader>pp :setlocal paste!<cr>
+
+" Move between rows in wrapped lines
+noremap j gj
+noremap k gk
+
+" Yank from cursor to end of line
+nnoremap Y y$
+
+" Write as root, when you forgot to sudoedit
+cnoreabbrev w!! w !sudo tee % >/dev/null
+
+" map ; to :
+noremap ; :
+
+" remove the highlight
+nnoremap <leader>n :noh<cr>
+
+" Open the quickfix window if there are errors
+noremap <leader>cw :botright :cw<cr>
+nnoremap <leader>ccl :ccl<CR>
+
+" Run make silently, then skip the 'Press ENTER to continue'
+noremap <leader>m :silent! :make! \| :redraw!<cr>
+nnoremap <leader>mc :silent! :make! check \| :redraw!<CR>
+nnoremap <leader>ml :silent! :make! clean \| :redraw!<CR>
+
+" Open terminal
+nnoremap <leader>te :rightb terminal ++rows=12<CR>
+
+" ----- Vim-easy-align plugin mapping ----- "
+nmap <leader>ga <Plug>(EasyAlign)
+xmap <leader>ga <Plug>(EasyAlign)
+
+" ----- Vim-fugitive plugin mappings ----- "
+nnoremap <leader>gd :Gvdiffsplit!<CR>
+nnoremap <leader>gdf :Gvdiff<CR>
+nnoremap <leader>g2 :diffget //2<CR>
+nnoremap <leader>g3 :diffget //3<CR>
+nnoremap <leader>gp :diffput<CR>
+
+nnoremap <leader>ge :Gedit<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>glt :Git log --decorate<CR>
+nnoremap <leader>gl :silent! Glog<CR>
+
+nnoremap <leader>gb :Git branch<Space>
+nnoremap <leader>go :Git checkout<Space>
+
+nnoremap <leader>gt :Git tag -a -m ''<Space>
+
+" ----- vim-test plugin mapping ----- "
+nmap <silent> <leader>ts :TestSuite<cr>
+
+
+" ----- COC plugin mappings ----- "
+" Use TAB for completion
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+" Use K to show documentation
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+
+" Navigation
+nnoremap <leader>kk :CocDiagnostic<cr>
+nnoremap <leader>kp <Plug>(coc-diagnostic-prev)
+nnoremap <leader>kn <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> <leader>kd <Plug>(coc-definition)
+nmap <silent> <leader>kt <Plug>(coc-type-definition)
+nmap <silent> <leader>ki <Plug>(coc-implementation)
+nmap <silent> <leader>kr <Plug>(coc-references)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>kf  <Plug>(coc-format-selected)
+nmap <leader>kf  <Plug>(coc-format-selected)
+nnoremap <leader>ko  <Plug>(coc-format)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>kac  <Plug>(coc-codeaction)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
+nnoremap <leader>f :silent! :call CocAction('format') <bar> :silent! :call CocAction('runCommand', 'editor.action.organizeImport')<CR>
+
+" }}} !Mapping
+
+" {{{ Options
+
+" Allow to copy past from vim
+set clipboard^=unnamed,unnamedplus
+
+" Set location of the viminfo file
+set viminfo='20,\"50,<100,n~/.vim/tmp/viminfo
+
+" See :h last-position-jump
+augroup last_position_jump
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
+
+" Create needed directories
+if empty(glob("~/.vim/tmp/"))
+    execute 'silent !mkdir -p ~/.vim/tmp/undodir'
+    execute 'silent !mkdir -p ~/.vim/tmp/backup'
+    execute 'silent !mkdir -p ~/.vim/tmp/swap'
+endif
+
+set undodir=~/.vim/tmp/undodir
+set undofile
+
+set backupdir=~/.vim/tmp/backup
+set backup
+
+set directory=~/.vim/tmp/swap
+set swapfile
+
+" }}} !Options
+
+" {{{ Plugin_manager
+
+" Tell vim-test to use dispatch to run our tests
+let test#strategy = "dispatch"
+
+" Tell Dispatch to use the pytest compiler when we call pytest (the compiler
+" file looks for py.test instead of pytest)
+let g:dispatch_compilers = {'pytest': 'pytest'}
+
+" Add the termdebug built-in plugin
+packadd termdebug
+
+let g:coc_global_extensions = [
+    \ 'coc-clangd',
+    \ 'coc-cmake',
+    \ 'coc-docker',
+    \ 'coc-git',
+    \ 'coc-go',
+    \ 'coc-highlight',
+    \ 'coc-json',
+    \ 'coc-markdownlint',
+    \ 'coc-nav',
+    \ 'coc-pyright',
+    \ 'coc-sql',
+    \ 'coc-xml',
+    \ 'coc-yaml',
+\]
+
+" Function to have git blame line in status bar
+function! LightlineGitBlame() abort
+  let blame = get(b:, 'coc_git_blame', '')
+  " return blame
+  return winwidth(0) > 120 ? blame : ''
+endfunction
+
+let g:lightline = {
+        \ 'colorscheme': 'ayu_dark',
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'filename', 'readonly', 'modified', 'gitbranch', 'gitblame' ] ],
+        \   'right': [ [ 'lineinfo' ],
+        \              [ 'percent' ],
+        \              [ 'fileencoding', 'filetype', 'charvaluehex' ] ]
+        \ },
+        \ 'component_function': {
+        \   'gitblame': 'LightlineGitBlame',
+        \   'gitbranch': 'FugitiveHead'
+        \ },
+        \ 'component': {
+        \   'charvaluehex': '0x%B'
+        \ },
+    \ }
+
+colorscheme jellybeans
+
+" }}} !Plugin_manager
+

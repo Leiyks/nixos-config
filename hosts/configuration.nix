@@ -1,7 +1,7 @@
 { config, inputs, lib, location, pkgs, user, ... }:
 
 {
-  imports = (import ../modules/shell);
+  imports = [ ];
 
   # User definition
   users.users.${user} = {
@@ -68,7 +68,7 @@
       # Keyboard layout
       layout = "fr,us";
       # Enable touchpad support
-      libinput.enable = "true";
+      libinput.enable = true;
     };
   };
 

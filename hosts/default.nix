@@ -28,7 +28,6 @@ in
       };
 
       modules = [
-        hyprland.nixosModules.default
         # ./laptop
         ./configuration.nix
 

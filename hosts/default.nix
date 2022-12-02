@@ -17,7 +17,7 @@ in
     let
       # TODO: Adapt monitor name
       hosts = {
-        mainMonitor = "eDP-1";
+        # mainMonitor = "eDP-1";
       };
     in
     lib.nixosSystem {
@@ -28,7 +28,7 @@ in
       };
 
       modules = [
-        # ./laptop
+        ./laptop
         ./configuration.nix
 
         home-manager.nixosModules.home-manager
@@ -41,7 +41,7 @@ in
           };
 
           home-manager.users.${user} = {
-            imports = [ (import ./home.nix) ]; # (import ./laptop/home.nix) ];
+            imports = [ (import ./home.nix) (import ./laptop/home.nix) ];
           };
         }
       ];

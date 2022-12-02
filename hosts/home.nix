@@ -29,7 +29,7 @@
     ];
 
     # TODO: Put this in the laptop home.nix file.
-    file.".config/wallpaper.jpg".source = ../modules/themes/wallpaper.jpg;
+    file.".config/wallpaper.jpg".source = ../modules/themes/laptop_wallpaper.jpg;
 
     pointerCursor = {
       # This will set cursor system-wide so applications can not choose their own
@@ -38,7 +38,7 @@
       size = 16;
     };
 
-    stateVersion = "22.05";
+    stateVersion = "22.11";
   };
 
   programs = {

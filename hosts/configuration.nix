@@ -65,10 +65,13 @@
     };
 
     xserver = {
+      enable = true;
       # Keyboard layout
       layout = "fr,us";
       # Enable touchpad support
       libinput.enable = true;
+      displayManager.sddm.enable = true;
+      desktopManager.plasma5.enable = true;
     };
   };
 
@@ -106,6 +109,7 @@
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };
+    # You should not modify this by hand !
     stateVersion = "22.05";
   };
 }

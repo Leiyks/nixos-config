@@ -1,7 +1,7 @@
 { config, pkgs, user, ... }:
 
 {
-  imports = [ (import ./hardware-configuration.nix) ];
+  imports = [ /etc/nixos/hardware-configuration.nix ];
   # TODO: uncomment when modules are done
   # imports = [ (import ./hardware-configuration.nix) ] ++ (../../modules/hardware) ++ (../../modules/desktop);
 
@@ -18,9 +18,8 @@
       grub = {
         enable = true;
         version = 2;
-        theme = pkgs.nixos-grub2-theme;
         devices = [ "/dev/sda" ];
-	# TODO: Modify when setting laptop
+        # TODO: Modify when setting laptop
         # efiSupport = true;
         useOSProber = true;
         enableCryptodisk = true;

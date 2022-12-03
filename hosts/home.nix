@@ -1,7 +1,7 @@
 { config, lib, pkgs, user, ... }:
 
 {
-  imports = [ ];
+  imports = (import ../modules/editors);
   # TODO: uncomment when modules are done
   # imports = (../modules/services) ++ (../modules/programs) ++ (../modules/editors);
 
@@ -14,7 +14,7 @@
       htop
       ranger
       tldr
-      tree 
+      tree
       bat
       most
       zoxide
@@ -38,6 +38,12 @@
       jq
       nixpkgs-fmt
       rnix-lsp
+      nodejs
+
+      # Editors
+      # TODO: uncomment when config is finished
+      # jetbrains.idea-ultimate
+      vscode
     ];
 
     stateVersion = "22.11";

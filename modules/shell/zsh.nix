@@ -25,11 +25,11 @@
     ohMyZsh = {
       enable = true;
       plugins = [
-	"command-not-found"
+        "command-not-found"
         "git"
-	"sudo"
-	"ssh-agent"
-	"zoxide"
+        "sudo"
+        "ssh-agent"
+        "zoxide"
       ];
       theme = "robbyrussell";
     };

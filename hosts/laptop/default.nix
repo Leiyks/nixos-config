@@ -1,7 +1,7 @@
 { config, pkgs, user, ... }:
 
 {
-  imports = [ ];
+  imports = [ (import ./hardware-configuration.nix) ];
   # TODO: uncomment when modules are done
   # imports = [ (import ./hardware-configuration.nix) ] ++ (../../modules/hardware) ++ (../../modules/desktop);
 

@@ -1,16 +1,17 @@
 { config, inputs, lib, location, pkgs, user, ... }:
 
 {
-  imports = [ ];
-  # TODO: uncomment when shell module is done
-  # imports = (../modules/shell);
+  imports = (import ../modules/shell);
 
   # User definition
-  users.users.${user} = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "kvm" "libvirtd" "plex" ];
-    initialPassword = "password";
-    shell = pkgs.zsh;
+  users = {
+    users.${user} = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "kvm" "libvirtd" "plex" ];
+      initialPassword = "password";
+    };
+
+    defaultUserShell = pkgs.zsh;
   };
 
   # User does not need to give password when using sudo.
@@ -53,6 +54,7 @@
     variables = {
       EDITOR = "vim";
       VISUAL = "vim";
+      PAGER = "most";
     };
   };
 

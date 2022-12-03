@@ -11,23 +11,33 @@
 
     packages = with pkgs; [
       # Terminal
-      htop # Resource Manager
-      ranger # File Manager
-      tldr # Helper
+      htop
+      ranger
+      tldr
+      tree 
+      bat
+      most
+      zoxide
 
       # Video/Audio
-      feh # Image Viewer
-      vlc # Media Player
+      feh
+      vlc
 
       # Apps
-      appimage-run # Runs AppImages on NixOS
-      brave # Browser
-      firefox # Browser
-      slack # Communication
+      brave
+      firefox
+      slack
 
       # File Management
-      unzip # Zip Files
-      unrar # Rar Files
+      unzip
+      unrar
+
+      # Languages
+      poetry
+      python310
+      jq
+      nixpkgs-fmt
+      rnix-lsp
     ];
 
     stateVersion = "22.11";

@@ -2,6 +2,8 @@
 
 {
   imports = [ ];
+  # TODO: uncomment when shell module is done
+  # imports = (../modules/shell);
 
   # User definition
   users.users.${user} = {

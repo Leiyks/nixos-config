@@ -15,8 +15,9 @@ in
 {
   laptop =
     let
-      # TODO: Adapt monitor name
-      hosts = {
+      host = {
+	hostName = "laptop";
+        # TODO: Adapt monitor name
         # mainMonitor = "eDP-1";
       };
     in
@@ -24,21 +25,18 @@ in
       inherit system;
 
       specialArgs = {
-        inherit hosts inputs location user;
+        inherit host inputs location user;
       };
 
       modules = [
         ./laptop
         ./configuration.nix
 
-        home-manager.nixosModules.home-manager
-        {
+        home-manager.nixosModules.home-manager {
+
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {
-            inherit user;
-            hosts = hosts // { hostName = "laptop"; };
-          };
+          home-manager.extraSpecialArgs = { inherit user host; };
 
           home-manager.users.${user} = {
             imports = [ (import ./home.nix) (import ./laptop/home.nix) ];

@@ -1,7 +1,9 @@
 { config, pkgs, user, ... }:
 
 {
-  imports = [ (import ./hardware-configuration.nix) ];
+  imports = [ ];
+  # TODO: uncomment when modules are done
+  # imports = [ (import ./hardware-configuration.nix) ] ++ (../../modules/hardware) ++ (../../modules/desktop);
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

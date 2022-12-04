@@ -1,9 +1,10 @@
 { config, lib, pkgs, user, ... }:
 
 {
-  imports = (import ../modules/editors);
-  # TODO: uncomment when modules are done
-  # imports = (../modules/services) ++ (../modules/programs) ++ (../modules/editors);
+  imports =
+    (import ../modules/editors);
+  # TODO: (import ../modules/services);
+  # TODO: (import ../modules/programs);
 
   home = {
     username = "${user}";

@@ -49,6 +49,10 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
+  console = {
+    keyMap = "fr";
+  };
+
   environment = {
     # Environment variables
     variables = {

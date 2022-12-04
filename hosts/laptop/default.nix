@@ -1,9 +1,11 @@
 { config, pkgs, user, ... }:
 
 {
-  imports = [ /etc/nixos/hardware-configuration.nix ];
-  # TODO: uncomment when modules are done
-  # imports = [ (import ./hardware-configuration.nix) ] ++ (../../modules/hardware) ++ (../../modules/desktop);
+  imports =
+    [ /etc/nixos/hardware-configuration.nix ] ++
+    (import ../../modules/hardware);
+
+  # TODO: (import ../../modules/desktop);
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

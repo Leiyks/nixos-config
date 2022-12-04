@@ -74,12 +74,12 @@
 
     xserver = {
       enable = true;
+      # TODO: Enable when the config is finished
+      # videoDrivers = [ "nvidia" ];
       # Keyboard layout
       layout = "fr,us";
       # Enable touchpad support
       libinput.enable = true;
-      displayManager.sddm.enable = true;
-      desktopManager.plasma5.enable = true;
     };
   };
 

@@ -3,9 +3,8 @@
 {
   imports =
     [ /etc/nixos/hardware-configuration.nix ] ++
+    [ (import ../../modules/desktop/i3-plasma/default.nix) ] ++
     (import ../../modules/hardware);
-
-  # TODO: (import ../../modules/desktop);
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

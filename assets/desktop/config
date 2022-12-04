@@ -1,0 +1,251 @@
+###############################################################################
+## Description:                                                              ##
+##   This is my i3-gaps config file !                                        ##
+##                                                                           ##
+## Maintainer:                                                               ##
+##   Alexandre "Leiyks" Rulleau                                              ##
+##   <alexandre.rulleau@epita.fr>                                            ##
+##                                                                           ##
+###############################################################################
+
+###############################################################################
+## General settings                                                          ##
+###############################################################################
+
+# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+set $mod Mod4
+
+# Configure windows border style
+default_border pixel 1
+default_floating_border pixel 1
+
+# Hide borders
+hide_edge_borders none
+
+# Font for window titles
+font xft:URWGothic-Book 8
+
+# Use Mouse+$mod to drag floating windows
+floating_modifier $mod
+
+# Focus do not follow the mouse
+focus_follows_mouse no
+
+# Workspace back and forth
+workspace_auto_back_and_forth yes
+
+# Switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# Theme colors
+# class                 border  backgr. text    indic.   child_border
+client.focused          #000000 #800000 #ffffff #ee4b2b
+client.focused_inactive #681204 #3b0303 #a3a3a3 #454948
+client.unfocused        #681204 #3b0303 #a3a3a3 #454948
+client.urgent           #ee4b2b #800000 #a3a3a3 #ee4b2b
+client.placeholder      #000000 #0c0c0c #ffffff #000000
+client.background       #000000
+
+###############################################################################
+## Specific windows configuration                                            ##
+###############################################################################
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
+for_window [class="GParted"] floating enable border pixel 1
+for_window [class="Nitrogen"] floating enable sticky enable border pixel 1
+for_window [class="qt5ct"] floating enable sticky enable border pixel 1
+for_window [class="Qtconfig-qt4"] floating enable sticky enable border pixel 1
+for_window [class="Simple-scan"] floating enable border pixel 1
+for_window [class="yakuake"] floating enable
+for_window [class="systemsettings"] floating enable
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [class="krunner"] floating enable; border none, move down 100px
+for_window [class="Kmix"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="(?i)*nextcloud*"] floating disable
+for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move up 450px
+for_window [class="plasmashell" window_type="dialog"] floating enable, border pixel 1, resize set 400 300
+for_window [class="ksplashqml"] kill; border pixel 1
+
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [title="win7"] floating enable; border none
+for_window [title="Desktop — Plasma"] kill; border pixel 1
+for_window [title="i3_help"] floating enable sticky enable border pixel 1
+
+no_focus [class="plasmashell" window_type="notification"]
+no_focus [class="plasmashell" window_type="on_screen_display"]
+
+###############################################################################
+## i3-gaps specific settings                                                 ##
+###############################################################################
+
+# Set inner/outer gaps
+gaps inner 10
+gaps outer -2
+
+# Draw borders only if there is more than one container
+# smart_borders on
+
+###############################################################################
+## Bindings                                                                  ##
+###############################################################################
+
+# Change borders style
+bindsym $mod+u border none
+bindsym $mod+n border pixel 1
+
+# Start a terminal
+bindsym $mod+Return exec konsole
+
+# Kill focused window
+bindsym $mod+Shift+A kill
+
+# Start program launcher
+bindsym $mod+d exec --no-startup-id krunner
+
+# Launch i3lock
+bindsym $mod+Ctrl+l exec i3lock-fancy -t 'Well have you noticed the shields are still up ?!'
+
+# Launch picom if it is not running
+bindsym $mod+t exec --no-startup-id picom --experimental-backends -b
+
+# Kill picom
+bindsym $mod+Ctrl+t exec --no-startup-id pkill picom
+
+# Change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#navigate workspaces next / previous
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
+# Split orientation
+bindsym $mod+h split h; exec notify-send 'Horizontal tile'
+bindsym $mod+v split v; exec notify-send 'Vertical tile'
+bindsym $mod+q split toggle
+
+# Change container layout
+bindsym $mod+s layout stacking
+bindsym $mod+z layout tabbed
+bindsym $mod+e layout toggle split
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Ctrl+c move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+c scratchpad show
+
+# Move focused container to previous workspace and jump to it
+bindsym $mod+b move container to workspace back_and_forth; workspace back_and_forth
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+###############################################################################
+## Workspaces settings                                                       ##
+###############################################################################
+
+# Workspace names
+# to display names or symbols instead of plain workspace numbers you can use
+# something like: set $ws1 1:mail
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+
+# Move to workspace with focused container
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+
+assign [class="Slack"] $ws3
+assign [class="discord"] $ws3
+assign [class="Brave-browser"] $ws2
+
+###############################################################################
+## Autostart applications                                                    ##
+###############################################################################
+
+# TODO: configure conky and polybar
+
+# Start conky for monitoring services
+#exec_always --no-startup-id conky -d -q
+
+# Start polybar to have a proper status bar
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+exec --no-startup-id sleep 10 && i3-msg "workspace $ws1"

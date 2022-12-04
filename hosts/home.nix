@@ -2,9 +2,9 @@
 
 {
   imports =
-    (import ../modules/editors);
-  # TODO: (import ../modules/services);
-  # TODO: (import ../modules/programs);
+    (import ../modules/editors) ++
+    (import ../modules/services) ++
+    (import ../modules/programs);
 
   home = {
     username = "${user}";

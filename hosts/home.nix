@@ -28,6 +28,7 @@
       brave
       firefox
       slack
+      discord
 
       # File Management
       unzip

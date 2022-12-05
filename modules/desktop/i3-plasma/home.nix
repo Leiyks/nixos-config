@@ -22,7 +22,140 @@ in
 
     config = {
 
+      inherit modifier;
+
+      colors = {
+        focused = {
+          border = "#000000";
+          childBorder = "#0c0c0c";
+          background = "#186177";
+          text = "#ffffff";
+          indicator = "#2F8EAB";
+        };
+        focusedInactive = {
+          border = "#032D42";
+          childBorder = "#032D42";
+          background = "#032D42";
+          text = "#a3a3a3";
+          indicator = "#454948";
+        };
+        unfocused = {
+          border = "#032D42";
+          childBorder = "#032D42";
+          background = "#032D42";
+          text = "#a3a3a3";
+          indicator = "#454948";
+        };
+        urgent = {
+          border = "#CB4B16";
+          childBorder = "#CB4B16";
+          background = "#FDF6E3";
+          text = "#a3a3a3";
+          indicator = "#2F8EAB";
+        };
+        placeholder = {
+          border = "#000000";
+          childBorder = "#000000";
+          background = "#0c0c0c";
+          text = "#ffffff";
+          indicator = "#000000";
+        };
+
+        background = "#000000";
+      };
+
+      focus.followMouse = false;
+
+      floating.border = 1;
+
+      gaps = {
+        inner = 10;
+        outer = -2;
+        smartBorders = "on";
+      };
+
+      assigns = {
+        "3" = [{ class = "^Slack$"; } { class = "^discord$"; }];
+        "2" = [{ class = "^Brave-browser$"; }];
+      };
+
+      keybindings = pkgs.lib.mkOptionDefault {
+        "${modifier}+u" = "border none";
+        "${modifier}+n" = "border pixel 1";
+
+        "${modifier}+Return" = "exec konsole";
+        "${modifier}+Shift+a" = "kill";
+        "${modifier}+Ctrl+l" = "exec i3lock-fancy -p -t 'Ask for permission to unlock !'";
+        "${modifier}+t" = "exec --no-startup-id picom --experimental-backends -b";
+        "${modifier}+Ctrl+t" = "exec --no-startup-id pkill picom ";
+        "${modifier}+Shift+e" = "exec qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1";
+
+        "${modifier}+Left" = "focus left";
+        "${modifier}+Down" = "focus down";
+        "${modifier}+Up" = "focus up";
+        "${modifier}+Right" = "focus right";
+        "${modifier}+Shift+Left" = "move left";
+        "${modifier}+Shift+Down" = "move down";
+        "${modifier}+Shift+Up" = "move up";
+        "${modifier}+Shift+Right" = "move right";
+
+        "${modifier}+b" = "move container to workspace back_and_forth; workspace back_and_forth";
+
+        "${modifier}+h" = "split h;exec notify-send 'Tiled windows horizontaly'";
+        "${modifier}+v" = "split v;exec notify-send 'Tiled windows vertically'";
+
+        "${modifier}+s" = "layout stacking";
+        "${modifier}+z" = "layout tabbed";
+        "${modifier}+e" = "layout toggle split";
+
+        "${modifier}+q" = "split toggle";
+        "${modifier}+f" = "fullscreen toggle";
+        "${modifier}+Shift+space" = "floating toggle";
+        "${modifier}+space" = "focus mode_toggle";
+
+        "${modifier}+Ctrl+c" = "move scratchpad";
+        "${modifier}+c" = "scratchpad show";
+
+        "${modifier}+Ctrl+Right" = "workspace next";
+        "${modifier}+Ctrl+Left" = "workspace prev";
+
+        "${modifier}+1" = "workspace 1";
+        "${modifier}+2" = "workspace 2";
+        "${modifier}+3" = "workspace 3";
+        "${modifier}+4" = "workspace 4";
+        "${modifier}+5" = "workspace 5";
+        "${modifier}+6" = "workspace 6";
+        "${modifier}+7" = "workspace 7";
+        "${modifier}+8" = "workspace 8";
+
+        "${modifier}+Ctrl+1" = "move container to workspace 1";
+        "${modifier}+Ctrl+2" = "move container to workspace 2";
+        "${modifier}+Ctrl+3" = "move container to workspace 3";
+        "${modifier}+Ctrl+4" = "move container to workspace 4";
+        "${modifier}+Ctrl+5" = "move container to workspace 5";
+        "${modifier}+Ctrl+6" = "move container to workspace 6";
+        "${modifier}+Ctrl+7" = "move container to workspace 7";
+        "${modifier}+Ctrl+8" = "move container to workspace 8";
+
+        "${modifier}+Shift+1" = "move container to workspace 1; workspace 1";
+        "${modifier}+Shift+2" = "move container to workspace 2; workspace 2";
+        "${modifier}+Shift+3" = "move container to workspace 3; workspace 3";
+        "${modifier}+Shift+4" = "move container to workspace 4; workspace 4";
+        "${modifier}+Shift+5" = "move container to workspace 5; workspace 5";
+        "${modifier}+Shift+6" = "move container to workspace 6; workspace 6";
+        "${modifier}+Shift+7" = "move container to workspace 7; workspace 7";
+        "${modifier}+Shift+8" = "move container to workspace 8; workspace 8";
+
+        "${modifier}+Shift+c" = "reload";
+        "${modifier}+Shift+r" = "restart";
+        "${modifier}+r" = ''mode "resize"'';
+      };
+
+      menu = "${pkgs.plasma-workspace}/bin/krunner";
+
       defaultWorkspace = "workspace 1";
+
+      workspaceAutoBackAndForth = true;
 
       startup = [
         {
@@ -35,19 +168,53 @@ in
           always = true;
           notification = false;
         }
+        # TODO: Activate this when the config is finished
         #{
-        ## TODO: reactivate when config is finished
-        #command = "brave"; #& slack & discord";
+        #command = "brave & discord & slack";
         #always = true;
         #notification = false;
         #}
       ];
 
-      terminal = "konsole ";
       bars = [ ];
+
+      terminal = "konsole";
     };
 
-    extraConfig = builtins.readFile ../../../assets/desktop/config;
+    extraConfig = ''
+      ####################################
+      ## Specific windows configuration ##
+      ####################################
+
+      for_window [window_role="pop-up"] floating enable
+      for_window [window_role="task_dialog"] floating enable
+
+      for_window [class="GParted"] floating enable border pixel 1
+      for_window [class="Nitrogen"] floating enable sticky enable border pixel 1
+      for_window [class="qt5ct"] floating enable sticky enable border pixel 1
+      for_window [class="Qtconfig-qt4"] floating enable sticky enable border pixel 1
+      for_window [class="Simple-scan"] floating enable border pixel 1
+      for_window [class="yakuake"] floating enable
+      for_window [class="systemsettings"] floating enable
+      for_window [class="plasmashell"] floating enable;
+      for_window [class="Plasma"] floating enable; border none
+      for_window [class="krunner"] floating enable; border none, move down 100px
+      for_window [class="Kmix"] floating enable; border none
+      for_window [class="Klipper"] floating enable; border none
+      for_window [class="Plasmoidviewer"] floating enable; border none
+      for_window [class="(?i)*nextcloud*"] floating disable
+      for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move up 450px
+      for_window [class="plasmashell" window_type="dialog"] floating enable, border pixel 1, resize set 400 300
+      for_window [class="ksplashqml"] kill; border pixel 1
+
+      for_window [title="plasma-desktop"] floating enable; border none
+      for_window [title="win7"] floating enable; border none
+      for_window [title="Desktop — Plasma"] kill; border pixel 1
+      for_window [title="i3_help"] floating enable sticky enable border pixel 1
+
+      no_focus [class="plasmashell" window_type="notification"]
+      no_focus [class="plasmashell" window_type="on_screen_display"]
+    '';
   };
 }
 

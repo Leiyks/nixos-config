@@ -27,7 +27,7 @@
         configurationLimit = 2;
       };
 
-      timeout = 1;
+      timeout = 15;
     };
   };
 

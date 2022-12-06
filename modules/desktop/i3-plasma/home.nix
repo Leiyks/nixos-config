@@ -9,7 +9,7 @@ in
     source = ../../../assets/desktop/startkderc;
   };
 
-  home.packages = with pkgs; [ i3lock-fancy ];
+  home.packages = with pkgs; [ i3lock-fancy maim ];
 
   xsession.enable = true;
 
@@ -26,22 +26,22 @@ in
 
       colors = {
         focused = {
-          border = "#000000";
-          childBorder = "#0c0c0c";
+          border = "#032D42";
+          childBorder = "#032D42";
           background = "#186177";
           text = "#ffffff";
           indicator = "#2F8EAB";
         };
         focusedInactive = {
-          border = "#032D42";
-          childBorder = "#032D42";
+          border = "#000000";
+          childBorder = "#000000";
           background = "#032D42";
           text = "#a3a3a3";
           indicator = "#454948";
         };
         unfocused = {
-          border = "#032D42";
-          childBorder = "#032D42";
+          border = "#000000";
+          childBorder = "#000000";
           background = "#032D42";
           text = "#a3a3a3";
           indicator = "#454948";
@@ -69,7 +69,7 @@ in
       floating.border = 1;
 
       gaps = {
-        inner = 10;
+        inner = 14;
         outer = -2;
         smartBorders = "on";
       };
@@ -85,10 +85,11 @@ in
 
         "${modifier}+Return" = "exec konsole";
         "${modifier}+Shift+a" = "kill";
-        "${modifier}+Ctrl+l" = "exec i3lock-fancy -p -t 'Ask for permission to unlock !'";
+        "${modifier}+Ctrl+l" = "exec i3lock-fancy -p -t 'Ask for permission to unlock !' -- maim --quiet";
         "${modifier}+t" = "exec --no-startup-id picom --experimental-backends -b";
         "${modifier}+Ctrl+t" = "exec --no-startup-id pkill picom ";
         "${modifier}+Shift+e" = "exec qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1";
+        "${modifier}+Shift+f" = "exec flameshot gui";
 
         "${modifier}+Left" = "focus left";
         "${modifier}+Down" = "focus down";
@@ -101,8 +102,8 @@ in
 
         "${modifier}+b" = "move container to workspace back_and_forth; workspace back_and_forth";
 
-        "${modifier}+h" = "split h;exec notify-send 'Tiled windows horizontaly'";
-        "${modifier}+v" = "split v;exec notify-send 'Tiled windows vertically'";
+        "${modifier}+h" = "split h";
+        "${modifier}+v" = "split v";
 
         "${modifier}+s" = "layout stacking";
         "${modifier}+z" = "layout tabbed";
@@ -151,7 +152,7 @@ in
         "${modifier}+r" = ''mode "resize"'';
       };
 
-      menu = "${pkgs.plasma-workspace}/bin/krunner";
+      menu = "krunner --replace";
 
       defaultWorkspace = "workspace 1";
 
@@ -198,12 +199,12 @@ in
       for_window [class="systemsettings"] floating enable
       for_window [class="plasmashell"] floating enable;
       for_window [class="Plasma"] floating enable; border none
-      for_window [class="krunner"] floating enable; border none, move down 100px
+      for_window [class="krunner"] floating enable; border none
       for_window [class="Kmix"] floating enable; border none
       for_window [class="Klipper"] floating enable; border none
       for_window [class="Plasmoidviewer"] floating enable; border none
       for_window [class="(?i)*nextcloud*"] floating disable
-      for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move up 450px
+      for_window [class="plasmashell" window_type="notification"] border none, move position 82ppt 2ppt
       for_window [class="plasmashell" window_type="dialog"] floating enable, border pixel 1, resize set 400 300
       for_window [class="ksplashqml"] kill; border pixel 1
 

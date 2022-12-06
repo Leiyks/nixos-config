@@ -4,6 +4,7 @@
   imports =
     [ /etc/nixos/hardware-configuration.nix ] ++
     [ (import ../../modules/desktop/i3-plasma/default.nix) ] ++
+    (import ../../modules/desktop/virtualization) ++
     (import ../../modules/hardware);
 
   boot = {

@@ -18,7 +18,7 @@ in
       host = {
         hostName = "laptop";
         # TODO: Adapt monitor name
-        # mainMonitor = "eDP-1";
+        mainMonitor = "Virtual1";
       };
     in
     lib.nixosSystem {

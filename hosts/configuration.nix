@@ -39,6 +39,7 @@
   security.rtkit.enable = true;
 
   # Fonts Definition
+
   fonts.fonts = with pkgs; [
     carlito
     vegur

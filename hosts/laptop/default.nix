@@ -8,24 +8,13 @@
     (import ../../modules/hardware);
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_0;
 
     loader = {
-      # TODO: Modify when setting laptop
-      # efi = {
-      #   canTouchEfiVariables = true;
-      #   efiSysMountPoint = "/boot";
-      # };
-
-      grub = {
-        enable = true;
-        version = 2;
-        devices = [ "/dev/sda" ];
-        # TODO: Modify when setting laptop
-        # efiSupport = true;
-        useOSProber = true;
-        enableCryptodisk = true;
-        configurationLimit = 2;
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
       };
 
       timeout = 15;
@@ -33,8 +22,6 @@
   };
 
   services = {
-    # TODO: Modify when setting laptop
-    # tlp.enable = true;
     blueman.enable = true;
   };
 }

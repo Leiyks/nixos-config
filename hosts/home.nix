@@ -29,6 +29,7 @@
       firefox
       slack
       discord
+      arandr
 
       # File Management
       unzip
@@ -43,8 +44,7 @@
       nodejs
 
       # Editors
-      # TODO: uncomment when config is finished
-      # jetbrains.idea-ultimate
+      jetbrains.idea-ultimate
       vscode
     ];
 

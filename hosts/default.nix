@@ -17,8 +17,7 @@ in
     let
       host = {
         hostName = "laptop";
-        # TODO: Adapt monitor name
-        mainMonitor = "Virtual1";
+        mainMonitor = "eDP-1";
       };
     in
     lib.nixosSystem {

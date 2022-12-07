@@ -17,6 +17,8 @@
   # User does not need to give password when using sudo.
   security.sudo.wheelNeedsPassword = false;
 
+  networking.networkmanager.enable = true;
+
   # Time zone and internationalisation
   time.timeZone = "Europe/Paris";
 
@@ -63,6 +65,16 @@
     };
   };
 
+  hardware.nvidia = {
+    prime = {
+      offload.enable = true;
+      nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";
+    };
+
+    modesetting.enable = true;
+  };
+
   # Services definition
   services = {
     # Sound settings
@@ -75,8 +87,7 @@
 
     xserver = {
       enable = true;
-      # TODO: Enable when the config is finished
-      # videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "nvidia" ];
       # Keyboard layout
       layout = "fr,us";
       # Enable touchpad support

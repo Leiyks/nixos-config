@@ -169,12 +169,11 @@ in
           always = true;
           notification = false;
         }
-        # TODO: Activate this when the config is finished
-        #{
-        #command = "brave & discord & slack";
-        #always = true;
-        #notification = false;
-        #}
+        {
+          command = "brave & discord & slack";
+          always = true;
+          notification = false;
+        }
       ];
 
       bars = [ ];
@@ -204,7 +203,7 @@ in
       for_window [class="Klipper"] floating enable; border none
       for_window [class="Plasmoidviewer"] floating enable; border none
       for_window [class="(?i)*nextcloud*"] floating disable
-      for_window [class="plasmashell" window_type="notification"] border none, move position 82ppt 3ppt
+      for_window [class="plasmashell" window_type="notification"] border none, move position 80ppt 10ppt
       for_window [class="plasmashell" window_type="dialog"] floating enable, border pixel 1, resize set 400 300
       for_window [class="ksplashqml"] kill; border pixel 1
 

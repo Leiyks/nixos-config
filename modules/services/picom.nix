@@ -38,7 +38,7 @@
       ### Fade ###
 
       fade = true;
-      fadeDelta = 5;
+      fadeDelta = 10;
       fadeSteps = [ 0.03 0.03 ];
 
       ### Fade ###

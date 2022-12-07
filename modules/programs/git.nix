@@ -4,12 +4,13 @@
   programs.git = {
     enable = true;
 
-    userName = "Baptiste Bourdet";
-    userEmail = "baptiste.bourdet@epita.fr";
+    userName = "Alexandre Rulleau";
+    userEmail = "alexandre.rulleau@epita.fr";
 
     difftastic = {
       enable = true;
       background = "dark";
+      display = "inline";
     };
 
     lfs.enable = true;

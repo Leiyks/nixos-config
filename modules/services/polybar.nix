@@ -24,11 +24,11 @@ with host; {
             # Bar name = Top
             monitor = "${mainMonitor}";
             width = "100%";
-            height = 15;
+            height = 26;
             background = "#00000000";
             foreground = "#ccffffff";
 
-            # offset-y = 2;
+            offset-y = -8;
             #spacing = "1.5";
             padding-right = 2;
 

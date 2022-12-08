@@ -24,7 +24,7 @@
 
   # Locales settings
   i18n = {
-    defaultLocale = "en_US.UTF-8";
+    defaultLocale = "en_GB.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "fr_FR.utf8";
       LC_IDENTIFICATION = "fr_FR.utf8";
@@ -65,15 +65,20 @@
     };
   };
 
-  hardware.nvidia = {
-    prime = {
-      offload.enable = true;
-      nvidiaBusId = "PCI:1:0:0";
-      intelBusId = "PCI:0:2:0";
-    };
+  hardware = {
+    enableAllFirmware = true;
+    nvidia = {
+      prime = {
+        offload.enable = true;
+        nvidiaBusId = "PCI:1:0:0";
+        intelBusId = "PCI:0:2:0";
+      };
 
-    modesetting.enable = true;
+      modesetting.enable = true;
+    };
   };
+
+  sound.mediaKeys.enable = true;
 
   # Services definition
   services = {

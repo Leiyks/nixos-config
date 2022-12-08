@@ -46,6 +46,9 @@
       # Editors
       jetbrains.idea-ultimate
       vscode
+      libgnome-keyring # Needed by vscode
+
+      nix-index
     ];
 
     stateVersion = "22.11";

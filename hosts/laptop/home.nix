@@ -5,7 +5,15 @@
 
   # Specific packages for laptop
   home = {
-    packages = with pkgs; [ ];
+    packages = with pkgs; [
+      glib.out
+      libgccjit.out
+    ];
+
+    sessionVariables = {
+      LD_LIBRARY_PATH = "\${LD_LIBRARY_PATH}:${pkgs.glib.out}/lib:${pkgs.libgccjit.out}/lib";
+    };
+
     file.".config/wallpaper.jpg".source = ../../assets/themes/laptop_wallpaper.jpg;
   };
 

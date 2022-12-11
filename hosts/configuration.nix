@@ -1,7 +1,7 @@
 { config, inputs, lib, location, pkgs, user, ... }:
 
 {
-  imports = (import ../modules/shell);
+  imports = (import ../modules/system/shell);
 
   # User definition
   users = {

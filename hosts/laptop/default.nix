@@ -3,9 +3,10 @@
 {
   imports =
     [ /etc/nixos/hardware-configuration.nix ] ++
-    [ (import ../../modules/desktop/i3-plasma/default.nix) ] ++
-    (import ../../modules/desktop/virtualization) ++
-    (import ../../modules/hardware);
+    (import ../../modules/system/virtualization) ++
+    (import ../../modules/system/i3-plasma) ++
+    (import ../../modules/system/hardware) ++
+    (import ../../modules/system/krb5);
 
   boot = {
     kernelPackages = pkgs.linuxPackages_6_0;

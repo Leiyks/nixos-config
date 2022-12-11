@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ (import ../../modules/desktop/i3-plasma/home.nix) ];
+  imports = (import ../../modules/home-manager/i3-plasma);
 
   # Specific packages for laptop
   home = {

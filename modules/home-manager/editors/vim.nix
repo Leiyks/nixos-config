@@ -3,13 +3,13 @@
 {
   programs.vim = {
     enable = true;
-    extraConfig = builtins.readFile ../../assets/vim/vimrc;
+    extraConfig = builtins.readFile ../../../assets/vim/vimrc;
   };
 
   # Vim files in home
   # Settings for CocNvim plugin
   home.file.coc-settings = {
-    text = builtins.readFile ../../assets/vim/coc-settings.json;
+    text = builtins.readFile ../../../assets/vim/coc-settings.json;
     target = ".vim/coc-settings.json";
   };
 

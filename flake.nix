@@ -17,7 +17,11 @@
     in
     {
       nixosConfigurations = (
-        import ./hosts { inherit inputs location user; }
+        import ./hosts { inherit inputs location user; systemConfiguration = true; }
+      );
+
+      homeConfigurations = (
+        import ./hosts { inherit inputs location user; systemConfiguration = false; }
       );
     };
 }

@@ -1,11 +1,11 @@
-{ inputs, location, user, ... }:
+{ inputs, location, user, systemConfiguration, ... }:
 
 let
   system = "x86_64-linux";
 
   home-manager = inputs.home-manager;
+
   nixpkgs = inputs.nixpkgs;
-  lib = nixpkgs.lib;
 
   pkgs = import nixpkgs {
     inherit system;
@@ -20,28 +20,21 @@ in
         mainMonitor = "eDP-1";
       };
     in
-    lib.nixosSystem {
-      inherit system;
-
-      specialArgs = {
-        inherit host inputs location user;
-      };
-
-      modules = [
-        ./laptop
-        ./configuration.nix
-
-        home-manager.nixosModules.home-manager
+    (if systemConfiguration == true then
+      nixpkgs.lib.nixosSystem
         {
+          inherit system;
 
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit user host; };
+          specialArgs = { inherit host inputs location user; };
 
-          home-manager.users.${user} = {
-            imports = [ (import ./home.nix) (import ./laptop/home.nix) ];
-          };
+          modules = [ ./laptop ./configuration.nix ];
         }
-      ];
-    };
+    else
+      home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        extraSpecialArgs = { inherit user host; };
+
+        modules = [ ./home.nix ./laptop/home.nix ];
+      });
 }

@@ -17,7 +17,7 @@
   # User does not need to give password when using sudo.
   security.sudo.wheelNeedsPassword = false;
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = { enable = true; wifi.backend = "iwd"; };
 
   # Time zone and internationalisation
   time.timeZone = "Europe/Paris";

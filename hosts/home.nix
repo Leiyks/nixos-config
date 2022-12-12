@@ -37,7 +37,7 @@
 
       # Languages
       poetry
-      python310
+      (python3.withPackages (p: [ p.pip ]))
       jq
       nixpkgs-fmt
       rnix-lsp
@@ -46,9 +46,11 @@
       # Editors
       jetbrains.idea-ultimate
       vscode
-      libgnome-keyring # Needed by vscode
 
+      # System
       nix-index
+      refind
+      efibootmgr
     ];
 
     stateVersion = "22.11";

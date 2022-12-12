@@ -5,12 +5,12 @@
   services.xserver = {
 
     displayManager = {
-      autoLogin = {
-        enable = true;
-        inherit user;
-      };
+      autoLogin = { enable = true; inherit user; };
+
       sddm = { enable = true; autoNumlock = true; };
+
       defaultSession = "plasma5+i3+${user}";
+
       session = [
         {
           manage = "desktop";
@@ -24,7 +24,9 @@
 
     desktopManager.plasma5 = {
       enable = true;
-      excludePackages = with pkgs.libsForQt5; [ kwallet ];
+      excludePackages = with pkgs.libsForQt5; [
+        kwallet
+      ];
     };
   };
 }

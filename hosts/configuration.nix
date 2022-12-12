@@ -90,6 +90,10 @@
       jack.enable = true;
     };
 
+    gnome.gnome-keyring.enable = true;
+
+    getty.autologinUser = user;
+
     xserver = {
       enable = true;
       videoDrivers = [ "nvidia" ];

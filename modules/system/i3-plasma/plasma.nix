@@ -7,7 +7,7 @@
     displayManager = {
       autoLogin = { enable = true; inherit user; };
 
-      sddm = { enable = true; autoNumlock = true; };
+      sddm = { enable = true; autoNumlock = true; enableHidpi = true; };
 
       defaultSession = "plasma5+i3+${user}";
 

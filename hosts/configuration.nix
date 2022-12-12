@@ -52,21 +52,17 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
-  console = {
-    keyMap = "fr";
-  };
+  console.keyMap = "fr";
 
-  environment = {
-    # Environment variables
-    variables = {
-      EDITOR = "vim";
-      VISUAL = "vim";
-      PAGER = "most";
-    };
+  environment.variables = {
+    EDITOR = "vim";
+    VISUAL = "vim";
+    PAGER = "most";
   };
 
   hardware = {
     enableAllFirmware = true;
+    opengl.enable = true;
     nvidia = {
       prime = {
         offload.enable = true;
@@ -90,6 +86,7 @@
       jack.enable = true;
     };
 
+    # Needed for VScode
     gnome.gnome-keyring.enable = true;
 
     getty.autologinUser = user;
@@ -97,18 +94,14 @@
     xserver = {
       enable = true;
       videoDrivers = [ "nvidia" ];
-      # Keyboard layout
       layout = "fr,us";
-      # Enable touchpad support
       libinput.enable = true;
     };
   };
 
   nix = {
     # Nix Package Manager settings
-    settings = {
-      auto-optimise-store = true;
-    };
+    settings.auto-optimise-store = true;
 
     # Garbage collector settings
     gc = {

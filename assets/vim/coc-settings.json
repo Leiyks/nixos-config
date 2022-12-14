@@ -19,6 +19,9 @@
         "--ignore=D100,D104"
     ],
     "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": [
+        "--check-untyped_defs"
+    ],
     "python.linting.banditEnabled": true,
     "python.linting.banditArgs": [
         "-s B101"

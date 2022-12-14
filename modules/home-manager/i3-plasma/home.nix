@@ -170,7 +170,7 @@ in
           notification = false;
         }
         {
-          command = "brave & discord & slack";
+          command = "brave & discord";
           always = true;
           notification = false;
         }

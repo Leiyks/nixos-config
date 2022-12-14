@@ -8,10 +8,12 @@
     packages = with pkgs; [
       glib.out
       libgccjit.out
+      zlib
     ];
 
     sessionVariables = {
-      LD_LIBRARY_PATH = "\${LD_LIBRARY_PATH}:${pkgs.glib.out}/lib:${pkgs.libgccjit.out}/lib";
+      LD_LIBRARY_PATH =
+        "\${LD_LIBRARY_PATH}:${pkgs.glib.out}/lib:${pkgs.libgccjit.out}/lib:${pkgs.zlib}/lib";
     };
 
     file.".config/wallpaper.jpg".source = ../../assets/themes/laptop_wallpaper.jpg;

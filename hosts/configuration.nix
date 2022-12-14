@@ -1,5 +1,13 @@
 { config, inputs, lib, location, pkgs, user, ... }:
-
+let
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec "$@"
+  '';
+in
 {
   imports = (import ../modules/system/shell);
 
@@ -54,15 +62,18 @@
 
   console.keyMap = "fr";
 
-  environment.variables = {
-    EDITOR = "vim";
-    VISUAL = "vim";
-    PAGER = "most";
+  environment = {
+    systemPackages = [ nvidia-offload ];
+    variables = {
+      EDITOR = "vim";
+      VISUAL = "vim";
+      PAGER = "most";
+    };
   };
 
   hardware = {
     enableAllFirmware = true;
-    opengl.enable = true;
+    opengl = { enable = true; driSupport32Bit = true; };
     nvidia = {
       prime = {
         offload.enable = true;
@@ -71,6 +82,8 @@
       };
 
       modesetting.enable = true;
+      powerManagement.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
   };
 
@@ -93,9 +106,33 @@
 
     xserver = {
       enable = true;
-      videoDrivers = [ "nvidia" ];
+
       layout = "fr,us";
+
       libinput.enable = true;
+
+      videoDrivers = [ "nvidia" ];
+      config = ''
+        Section "Device"
+            Identifier  "Intel Graphics"
+            Driver      "intel"
+            Option      "TearFree"        "true"
+            Option      "SwapbuffersWait" "true"
+            BusID       "PCI:0:2:0"
+        EndSection
+
+        Section "Device"
+            Identifier "nvidia"
+            Driver "nvidia"
+            BusID "PCI:1:0:0"
+            Option "AllowEmptyInitialConfiguration"
+        EndSection
+      '';
+      screenSection = ''
+        Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+        Option         "AllowIndirectGLXProtocol" "off"
+        Option         "TripleBuffer" "on"
+      '';
     };
   };
 
@@ -124,15 +161,6 @@
   # Allow proprietary software.
   nixpkgs.config.allowUnfree = true;
 
-  system = {
-    # NixOS settings
-    autoUpgrade = {
-      # Allow auto update (not useful in flakes)
-      enable = true;
-      channel = "https://nixos.org/channels/nixos-unstable";
-    };
-    # You should not modify this by hand !
-    stateVersion = "22.05";
-  };
+  system.stateVersion = "22.05";
 }
 

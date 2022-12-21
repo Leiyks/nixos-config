@@ -75,7 +75,6 @@
       forceFullCompositionPipeline = true;
       modesetting.enable = true;
       powerManagement.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.production;
     };
   };
 
@@ -104,6 +103,22 @@
       libinput.enable = true;
 
       videoDrivers = [ "nvidia" "modesetting" ];
+      extraConfig = ''
+        Section "Device"
+            Identifier  "Intel Graphics"
+            Driver      "intel"
+            Option      "TearFree"        "true"
+            Option      "SwapbuffersWait" "true"
+            BusID       "PCI:0:2:0"
+        EndSection
+        Section "Device"
+            Identifier "nvidia"
+            Driver "nvidia"
+            BusID "PCI:1:0:0"
+            Option "AllowEmptyInitialConfiguration"
+        EndSection
+      '';
+
       deviceSection = ''
         Option "DRI" "2"
         Option "TearFree" "true"

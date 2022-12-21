@@ -26,6 +26,7 @@
       enable = true;
       excludePackages = with pkgs.libsForQt5; [
         kwallet
+        kwin
       ];
     };
   };

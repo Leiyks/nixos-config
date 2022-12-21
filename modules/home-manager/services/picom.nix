@@ -80,13 +80,14 @@
         # Specify the blur convolution kernel, with the following format:
         blur-kern = "5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
 
-
         # Exclude conditions for background blur.
         blur-background-exclude = [
           "window_type = 'dock'"
           "window_type = 'desktop'"
           "_GTK_FRAME_EXTENTS@:c"
         ];
+
+        unredir-if-possible = false;
 
         detect-rounded-corners = true;
       };

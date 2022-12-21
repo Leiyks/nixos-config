@@ -1,13 +1,5 @@
 { config, inputs, lib, location, pkgs, user, ... }:
-let
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec "$@"
-  '';
-in
+
 {
   imports = (import ../modules/system/shell);
 
@@ -63,7 +55,7 @@ in
   console.keyMap = "fr";
 
   environment = {
-    systemPackages = [ nvidia-offload ];
+    systemPackages = [ ];
     variables = {
       EDITOR = "vim";
       VISUAL = "vim";
@@ -76,14 +68,14 @@ in
     opengl = { enable = true; driSupport32Bit = true; };
     nvidia = {
       prime = {
-        offload.enable = true;
+        sync.enable = true;
         nvidiaBusId = "PCI:1:0:0";
         intelBusId = "PCI:0:2:0";
       };
-
+      forceFullCompositionPipeline = true;
       modesetting.enable = true;
       powerManagement.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
     };
   };
 
@@ -111,27 +103,10 @@ in
 
       libinput.enable = true;
 
-      videoDrivers = [ "nvidia" ];
-      config = ''
-        Section "Device"
-            Identifier  "Intel Graphics"
-            Driver      "intel"
-            Option      "TearFree"        "true"
-            Option      "SwapbuffersWait" "true"
-            BusID       "PCI:0:2:0"
-        EndSection
-
-        Section "Device"
-            Identifier "nvidia"
-            Driver "nvidia"
-            BusID "PCI:1:0:0"
-            Option "AllowEmptyInitialConfiguration"
-        EndSection
-      '';
-      screenSection = ''
-        Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-        Option         "AllowIndirectGLXProtocol" "off"
-        Option         "TripleBuffer" "on"
+      videoDrivers = [ "nvidia" "modesetting" ];
+      deviceSection = ''
+        Option "DRI" "2"
+        Option "TearFree" "true"
       '';
     };
   };

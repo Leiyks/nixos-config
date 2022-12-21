@@ -3,7 +3,7 @@
 {
   virtualisation.docker = {
     enable = true;
-    enableNvidia = true;
+    #enableNvidia = true;
   };
 
   users.groups.docker.members = [ "${user}" ];

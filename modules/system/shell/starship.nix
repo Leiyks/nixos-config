@@ -31,6 +31,7 @@
         sigint_symbol = ''🧱$status'';
         signal_symbol = ''⚡$status'';
         style = ''bold red'';
+        map_symbol = true;
       };
 
       time = {

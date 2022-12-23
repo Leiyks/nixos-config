@@ -5,3 +5,5 @@ if xrandr | grep "HDMI-1 connected"; then
 else
     xrandr --output DP-1 --off --output eDP-2 --primary --mode 2560x1440 --rate 240 --pos 1920x0 --rotate normal --output HDMI-1 --off
 fi
+
+feh --bg-fill ~/.config/wallpaper.jpg

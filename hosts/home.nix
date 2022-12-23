@@ -42,6 +42,9 @@
       nixpkgs-fmt
       rnix-lsp
       nodejs
+      clang-tools_14
+      gcc.out
+      go
 
       # Editors
       jetbrains.idea-ultimate

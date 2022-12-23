@@ -131,6 +131,8 @@ in
         "${modifier}+7" = "workspace 7";
         "${modifier}+8" = "workspace 8";
 
+        "${modifier}+Ctrl+x" = "move workspace to output next";
+
         "${modifier}+Ctrl+1" = "move container to workspace 1";
         "${modifier}+Ctrl+2" = "move container to workspace 2";
         "${modifier}+Ctrl+3" = "move container to workspace 3";
@@ -224,4 +226,3 @@ in
     '';
   };
 }
-

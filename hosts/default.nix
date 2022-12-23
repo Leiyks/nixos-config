@@ -13,7 +13,8 @@ in
     let
       host = {
         hostName = "laptop";
-        mainMonitor = "eDP-1";
+        mainMonitor = "eDP-2";
+        secondMonitor = "HDMI-1";
       };
     in
     (if systemConfiguration == true then

@@ -49,7 +49,7 @@
     jetbrains-mono
     font-awesome
     corefonts
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "Hack" ]; })
   ];
 
   console.keyMap = "fr";
@@ -60,21 +60,6 @@
       EDITOR = "vim";
       VISUAL = "vim";
       PAGER = "most";
-    };
-  };
-
-  hardware = {
-    enableAllFirmware = true;
-    opengl = { enable = true; driSupport32Bit = true; };
-    nvidia = {
-      prime = {
-        sync.enable = true;
-        nvidiaBusId = "PCI:1:0:0";
-        intelBusId = "PCI:0:2:0";
-      };
-      forceFullCompositionPipeline = true;
-      modesetting.enable = true;
-      powerManagement.enable = true;
     };
   };
 
@@ -101,28 +86,6 @@
       layout = "fr,us";
 
       libinput.enable = true;
-
-      videoDrivers = [ "nvidia" "modesetting" ];
-      extraConfig = ''
-        Section "Device"
-            Identifier  "Intel Graphics"
-            Driver      "intel"
-            Option      "TearFree"        "true"
-            Option      "SwapbuffersWait" "true"
-            BusID       "PCI:0:2:0"
-        EndSection
-        Section "Device"
-            Identifier "nvidia"
-            Driver "nvidia"
-            BusID "PCI:1:0:0"
-            Option "AllowEmptyInitialConfiguration"
-        EndSection
-      '';
-
-      deviceSection = ''
-        Option "DRI" "2"
-        Option "TearFree" "true"
-      '';
     };
   };
 

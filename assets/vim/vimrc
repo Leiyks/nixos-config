@@ -18,13 +18,7 @@
 
 " {{{ Plugins
 
-" Load the plug.vim file from github
-if empty(glob("~/.vim/autoload/plug.vim"))
-    " Ensure all needed directories exist then download the plugin manager
-    execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
-endif
-
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " Bag of mappings
 Plug 'tpope/vim-surround'
@@ -79,10 +73,6 @@ set hidden
 " Set the time (in milliseconds) spent idle until various actions occur
 " In this configuration, it is particularly useful for the tagbar plugin
 set updatetime=100
-
-" For some stupid reason, vim requires the term to begin with 'xterm', so the
-" automatically detected 'rxvt-unicode-256color' doesn't work.
-set term=xterm-256color
 
 " remove the check of included files for the auto complete
 set complete-=i
@@ -353,6 +343,34 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 nnoremap <leader>f :silent! :call CocAction('format') <bar> :silent! :call CocAction('runCommand', 'editor.action.organizeImport')<CR>
 
+" Coc-exporer navigation
+let g:coc_explorer_global_presets = {
+\   'tab': {
+\     'position': 'tab',
+\     'quit-on-open': v:true,
+\   },
+\   'tab:$': {
+\     'position': 'tab:$',
+\     'quit-on-open': v:true,
+\   },
+\   'floating': {
+\     'position': 'floating',
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'buffer': {
+\     'sources': [{'name': 'buffer', 'expand': v:true}]
+\   },
+\ }
+
+" Use preset argument to open it
+nmap <leader>et <Cmd>CocCommand explorer --preset tab<CR>
+nmap <leader>ef <Cmd>CocCommand explorer --preset floating<CR>
+nmap <leader>eb <Cmd>CocCommand explorer --preset buffer<CR>
+nmap <leader>er <Cmd>CocCommand explorer<CR>
+
+" List all presets
+nmap <space>el <Cmd>CocList explPresets<CR>
+
 " }}} !Mapping
 
 " {{{ Options
@@ -361,27 +379,27 @@ nnoremap <leader>f :silent! :call CocAction('format') <bar> :silent! :call CocAc
 set clipboard^=unnamed,unnamedplus
 
 " Set location of the viminfo file
-set viminfo='20,\"50,<100,n~/.vim/tmp/viminfo
+set viminfo='20,\"50,<100,n~/.config/nvim/tmp/viminfo
 
 " See :h last-position-jump
 augroup last_position_jump
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-" Create needed directories
-if empty(glob("~/.vim/tmp/"))
-    execute 'silent !mkdir -p ~/.vim/tmp/undodir'
-    execute 'silent !mkdir -p ~/.vim/tmp/backup'
-    execute 'silent !mkdir -p ~/.vim/tmp/swap'
-endif
+"" Create needed directories
+"if empty(glob("~/.vim/tmp/"))
+execute 'silent !mkdir -p ~/.config/nvim/tmp/undodir'
+execute 'silent !mkdir -p ~/.config/nvim/tmp/backup'
+execute 'silent !mkdir -p ~/.config/nvim/tmp/swap'
+"endif
 
-set undodir=~/.vim/tmp/undodir
+set undodir=~/.config/nvim/tmp/undodir
 set undofile
 
-set backupdir=~/.vim/tmp/backup
+set backupdir=~/.config/nvim/tmp/backup
 set backup
 
-set directory=~/.vim/tmp/swap
+set directory=~/.config/nvim/tmp/swap
 set swapfile
 
 " }}} !Options
@@ -402,6 +420,7 @@ let g:coc_global_extensions = [
     \ 'coc-clangd',
     \ 'coc-cmake',
     \ 'coc-docker',
+    \ 'coc-explorer',
     \ 'coc-git',
     \ 'coc-go',
     \ 'coc-highlight',
@@ -414,24 +433,16 @@ let g:coc_global_extensions = [
     \ 'coc-yaml',
 \]
 
-" Function to have git blame line in status bar
-function! LightlineGitBlame() abort
-  let blame = get(b:, 'coc_git_blame', '')
-  " return blame
-  return winwidth(0) > 120 ? blame : ''
-endfunction
-
 let g:lightline = {
         \ 'colorscheme': 'ayu_dark',
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'filename', 'readonly', 'modified', 'gitbranch', 'gitblame' ] ],
+        \             [ 'filename', 'readonly', 'modified', 'gitbranch' ] ],
         \   'right': [ [ 'lineinfo' ],
         \              [ 'percent' ],
         \              [ 'fileencoding', 'filetype', 'charvaluehex' ] ]
         \ },
         \ 'component_function': {
-        \   'gitblame': 'LightlineGitBlame',
         \   'gitbranch': 'FugitiveHead'
         \ },
         \ 'component': {

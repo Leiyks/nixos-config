@@ -30,6 +30,7 @@
       slack
       discord
       arandr
+      xsel # Usefull and needed for neovim clipboard
 
       # File Management
       unzip
@@ -37,7 +38,7 @@
 
       # Languages
       poetry
-      (python3.withPackages (p: [ p.pip ]))
+      (python3.withPackages (p: [ p.pip p.black ]))
       jq
       nixpkgs-fmt
       rnix-lsp

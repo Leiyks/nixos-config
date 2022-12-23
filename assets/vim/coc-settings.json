@@ -35,5 +35,6 @@
             ]
         }
     },
-    "coc.preferences.formatOnSave": true
+    "coc.preferences.formatOnSave": true,
+    "git.addGBlameToVirtualText": true
 }

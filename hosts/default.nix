@@ -12,7 +12,7 @@ in
   laptop =
     let
       host = {
-        hostName = "laptop";
+        hostName = "leiyks-laptop";
         mainMonitor = "eDP-2";
         secondMonitor = "HDMI-1";
       };

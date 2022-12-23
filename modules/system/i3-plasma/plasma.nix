@@ -5,7 +5,7 @@
   services.xserver = {
 
     displayManager = {
-      autoLogin = { enable = true; inherit user; };
+      autoLogin = { enable = false; inherit user; };
 
       sddm = { enable = true; autoNumlock = true; enableHidpi = true; };
 

@@ -32,7 +32,7 @@
     };
 
     extraConfig = {
-      pull.ff = "only";
+      init.defaultBranch = "main";
       push.merge = true;
       commit.verbose = true;
 

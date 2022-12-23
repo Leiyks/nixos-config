@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, host, ... }:
 let
   modifier = "Mod4";
 in
@@ -85,7 +85,9 @@ in
 
         "${modifier}+Return" = "exec konsole";
         "${modifier}+Shift+a" = "kill";
-        "${modifier}+Ctrl+l" = "exec i3lock-fancy -p -t 'Ask for permission to unlock !' -- maim --quiet";
+        "${modifier}+Ctrl+l" = "exec i3lock-fancy -t 'Ask for permission to unlock !' -- maim --quiet";
+        "${modifier}+Ctrl+y" = "exec --no-startup-id systemctl --user restart polybar";
+        "${modifier}+Ctrl+s" = "exec --no-startup-id ~/.screenlayout/script.sh";
         "${modifier}+t" = "exec --no-startup-id picom --experimental-backends -b";
         "${modifier}+Ctrl+t" = "exec --no-startup-id pkill picom ";
         "${modifier}+Shift+e" = "exec qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1";
@@ -160,12 +162,17 @@ in
 
       startup = [
         {
-          command = "${pkgs.feh}/bin/feh --bg-scale ~/.config/wallpaper.jpg";
+          command = ''pkill "ksplashqml"'';
           always = true;
           notification = false;
         }
         {
-          command = ''pkill "ksplashqml"'';
+          command = "~/.screenlayout/script.sh";
+          always = true;
+          notification = false;
+        }
+        {
+          command = "${pkgs.feh}/bin/feh --bg-fill ~/.config/wallpaper.jpg";
           always = true;
           notification = false;
         }

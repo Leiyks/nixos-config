@@ -10,7 +10,8 @@
     difftastic = {
       enable = true;
       background = "dark";
-      display = "inline";
+      display = "side-by-side-show-both";
+      color = "always";
     };
 
     lfs.enable = true;

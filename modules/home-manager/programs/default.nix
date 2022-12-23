@@ -1,3 +1,4 @@
 [
+  ./fzf.nix
   ./git.nix
 ]

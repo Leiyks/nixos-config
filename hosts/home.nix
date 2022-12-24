@@ -31,6 +31,7 @@
       discord
       arandr
       xsel # Usefull and needed for neovim clipboard
+      ripgrep
 
       # File Management
       unzip

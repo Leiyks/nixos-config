@@ -371,6 +371,9 @@ nmap <leader>er <Cmd>CocCommand explorer<CR>
 " List all presets
 nmap <space>el <Cmd>CocList explPresets<CR>
 
+" Open file on the browser
+nmap <leader>gi <Cmd>CocCommand git.browserOpen<CR>
+
 " }}} !Mapping
 
 " {{{ Options
@@ -386,12 +389,10 @@ augroup last_position_jump
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-"" Create needed directories
-"if empty(glob("~/.vim/tmp/"))
+" Create needed directories
 execute 'silent !mkdir -p ~/.config/nvim/tmp/undodir'
 execute 'silent !mkdir -p ~/.config/nvim/tmp/backup'
 execute 'silent !mkdir -p ~/.config/nvim/tmp/swap'
-"endif
 
 set undodir=~/.config/nvim/tmp/undodir
 set undofile

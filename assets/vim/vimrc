@@ -31,14 +31,13 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-obsession'
 Plug 'nvim-lua/plenary.nvim'
-
-" Telescope
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 
 " Theming
 Plug 'nanotech/jellybeans.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'sheerun/vim-polyglot'
 
 " Filetype specific plugins
 Plug '5long/pytest-vim-compiler'
@@ -69,7 +68,6 @@ set autowrite
 
 " Force encoding to utf-8
 set encoding=utf-8
-set fenc=utf-8
 set termencoding=utf-8
 
 " Hide buffers instead of closing them
@@ -125,6 +123,9 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Color the column after textwidth, usually the 80th
 set colorcolumn=+1
+
+" Enable 24 bits RGB colors
+set termguicolors
 
 " Display trailing Whitespaces
 set list
@@ -434,11 +435,11 @@ let g:coc_global_extensions = [
     \ 'coc-explorer',
     \ 'coc-git',
     \ 'coc-go',
-    \ 'coc-highlight',
     \ 'coc-json',
     \ 'coc-markdownlint',
     \ 'coc-nav',
     \ 'coc-pyright',
+    \ 'coc-spell-checker',
     \ 'coc-sql',
     \ 'coc-xml',
     \ 'coc-yaml',

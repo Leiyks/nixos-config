@@ -24,6 +24,12 @@ in
 
       inherit modifier;
 
+      fonts = {
+        names = [ "HackNerdFont" ];
+        style = "Bold Semi-Condensed";
+        size = 12.0;
+      };
+
       colors = {
         focused = {
           border = "#032D42";
@@ -63,7 +69,6 @@ in
 
         background = "#000000";
       };
-
       focus.followMouse = false;
 
       floating.border = 1;

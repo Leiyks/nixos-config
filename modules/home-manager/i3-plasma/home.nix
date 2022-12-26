@@ -211,6 +211,8 @@ in
     };
 
     extraConfig = ''
+      title_align center
+
       ####################################
       ## Specific windows configuration ##
       ####################################

@@ -124,9 +124,6 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Color the column after textwidth, usually the 80th
 set colorcolumn=+1
 
-" Enable 24 bits RGB colors
-set termguicolors
-
 " Display trailing Whitespaces
 set list
 set listchars=trail:¬

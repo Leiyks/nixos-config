@@ -13,12 +13,12 @@ in
     let
       host = {
         hostName = "leiyks-laptop";
-        mainMonitor = "eDP-2";
-        secondMonitor = "HDMI-1";
+        mainMonitor = "eDP-1-1";
+        secondMonitor = "HDMI-0";
       };
     in
     (if systemConfiguration == true then
-      inputs.nixpkgs-stable.lib.nixosSystem
+      inputs.nixpkgs.lib.nixosSystem
         {
           inherit system;
 

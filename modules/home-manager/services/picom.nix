@@ -7,7 +7,7 @@
     services.picom = {
       enable = true;
 
-      backend = "xrender";
+      backend = "glx";
       vSync = true;
 
       wintypes = {

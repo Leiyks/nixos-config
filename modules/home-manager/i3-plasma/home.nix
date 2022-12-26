@@ -194,11 +194,6 @@ in
           notification = false;
         }
         {
-          command = "${pkgs.feh}/bin/feh --bg-fill ~/.config/wallpaper.jpg";
-          always = true;
-          notification = false;
-        }
-        {
           command = "brave & discord";
           always = true;
           notification = false;

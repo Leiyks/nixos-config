@@ -331,6 +331,15 @@ nmap <silent> <leader>kr <Plug>(coc-references)
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rf <Plug>(coc-refactor)
+
+nmap <expr> <silent> <C-d> <SID>select_current_word()
+function! s:select_current_word()
+  if !get(b:, 'coc_cursors_activated', 0)
+    return "\<Plug>(coc-cursors-word)"
+  endif
+  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
 
 " Formatting selected code.
 xmap <leader>kf  <Plug>(coc-format-selected)
@@ -436,7 +445,6 @@ let g:coc_global_extensions = [
     \ 'coc-markdownlint',
     \ 'coc-nav',
     \ 'coc-pyright',
-    \ 'coc-spell-checker',
     \ 'coc-sql',
     \ 'coc-xml',
     \ 'coc-yaml',

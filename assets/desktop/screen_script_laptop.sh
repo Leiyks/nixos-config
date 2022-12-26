@@ -7,3 +7,4 @@ else
 fi
 
 feh --bg-fill ~/.config/wallpaper.jpg
+systemctl --user restart polybar

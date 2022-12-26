@@ -84,6 +84,21 @@ in
         "2" = [{ class = "^Brave-browser$"; }];
       };
 
+      workspaceOutputAssign = [
+        {
+          workspace = "1";
+          output = "${host.mainMonitor}";
+        }
+        {
+          workspace = "2";
+          output = "${host.secondMonitor}";
+        }
+        {
+          workspace = "3";
+          output = "${host.secondMonitor}";
+        }
+      ];
+
       keybindings = pkgs.lib.mkOptionDefault {
         "${modifier}+u" = "border none";
         "${modifier}+n" = "border pixel 1";

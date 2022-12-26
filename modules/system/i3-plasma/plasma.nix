@@ -3,6 +3,7 @@
 {
   # Enable the X11 windowing system
   services.xserver = {
+    dpi = 96;
 
     displayManager = {
       autoLogin = { enable = false; inherit user; };

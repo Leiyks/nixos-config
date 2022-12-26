@@ -120,7 +120,7 @@ with host; {
           "module/backlight" = {
             # Show screen brightnesss
             type = "internal/backlight";
-            card = "nv_backlight";
+            card = "intel_backlight";
             format = "<ramp> <bar>";
 
             ramp-0 = "";

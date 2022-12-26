@@ -31,6 +31,12 @@
     };
   };
 
+  # Needed for specific projects
+  programs.fuse.userAllowOther = true;
+  networking.extraHosts = ''
+    127.0.0.1 minio
+  '';
+
   hardware.nvidia = {
     prime = {
       sync.enable = true;

@@ -39,7 +39,7 @@
 
       # Languages
       poetry
-      (python3.withPackages (p: [ p.pip p.black ]))
+      (python3.withPackages (p: [ p.pip p.black p.pytest ]))
       jq
       nixpkgs-fmt
       rnix-lsp
@@ -47,6 +47,7 @@
       clang-tools_14
       gcc.out
       go
+      gnumake
 
       # Editors
       jetbrains.idea-ultimate

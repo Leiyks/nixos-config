@@ -35,9 +35,14 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 
 " Theming
-Plug 'nanotech/jellybeans.vim'
+Plug 'navarasu/onedark.nvim'
 Plug 'itchyny/lightline.vim'
-Plug 'sheerun/vim-polyglot'
+
+" Tree-sitter
+Plug 'andymass/vim-matchup'
+Plug 'folke/twilight.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
 " Filetype specific plugins
 Plug '5long/pytest-vim-compiler'
@@ -74,7 +79,6 @@ set termencoding=utf-8
 set hidden
 
 " Set the time (in milliseconds) spent idle until various actions occur
-" In this configuration, it is particularly useful for the tagbar plugin
 set updatetime=100
 
 " remove the check of included files for the auto complete
@@ -120,6 +124,8 @@ set belloff=all
 
 " Add info to statusline
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+set termguicolors
 
 " Color the column after textwidth, usually the 80th
 set colorcolumn=+1
@@ -391,6 +397,62 @@ nmap <space>el <Cmd>CocList explPresets<CR>
 " Open file on the browser
 nmap <leader>gi <Cmd>CocCommand git.browserOpen<CR>
 
+" Tree-sitter configuration
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all", -- "all", or list of languages
+
+  sync_install = false, -- Install parsers synchronously (only applied to `ensure_installed`)
+
+  ignore_install = { "" }, -- List of parsers to ignore installing (for "all")
+
+  highlight = {
+    enable = true, -- `false` will disable the whole extension
+    disable = { "" },
+    additional_vim_regex_highlighting = false,
+  },
+
+  indent = { enable = true, disable = { "yaml" }},
+
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn", -- set to `false` to disable one of the mappings
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+
+  refactor = {
+      highlight_definitions = {
+        enable = true,
+        clear_on_cursor_move = true, -- Set to false if you have an `updatetime` of ~100
+      },
+  },
+
+  matchup = {
+    enable = true,  -- mandatory, false will disable the whole extension
+    disable = { "" },  -- optional, list of language that will be disabled
+  },
+}
+EOF
+
+lua << EOF
+require("twilight").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+}
+EOF
+
+lua << EOF
+require('onedark').setup {
+    style = 'deep'
+}
+require('onedark').load()
+EOF
+
 " }}} !Mapping
 
 " {{{ Options
@@ -467,7 +529,7 @@ let g:lightline = {
         \ },
     \ }
 
-colorscheme jellybeans
+colorscheme onedark
 
 " }}} !Plugin_manager
 

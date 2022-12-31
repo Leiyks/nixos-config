@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  programs.command-not-found.enable = false;
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -9,6 +10,12 @@
     syntaxHighlighting.enable = true;
 
     histSize = 100000;
+
+    zsh-autoenv.enable = true;
+    interactiveShellInit = ''
+      neofetch
+      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+    '';
 
     shellAliases = {
       "cd" = "z";
@@ -20,12 +27,13 @@
       "restish" = "noglog restish";
       "cat" = "bat";
       "nix-shell" = "nix-shell --command 'exec zsh; return'";
+      "gcans!" = "git commit -v -a -s -S --no-edit --amend";
+      "gcns!" = "git commit -v -s -S --no-edit --amend";
     };
 
     ohMyZsh = {
       enable = true;
       plugins = [
-        "command-not-found"
         "git"
         "sudo"
         "ssh-agent"

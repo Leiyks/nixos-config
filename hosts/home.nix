@@ -19,6 +19,7 @@
       bat
       most
       zoxide
+      neofetch
 
       # Video/Audio
       feh
@@ -54,7 +55,6 @@
       vscode
 
       # System
-      nix-index
       refind
       efibootmgr
     ];

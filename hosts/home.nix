@@ -49,6 +49,7 @@
       gcc.out
       go
       gnumake
+      cargo
 
       # Editors
       jetbrains.idea-ultimate

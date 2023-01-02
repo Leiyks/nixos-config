@@ -1,27 +1,21 @@
-{ config, pkgs, ... }:
-
+{ pkgs, globalPkgDir, ... }:
+let
+  lvim-init = pkgs.writeShellScriptBin "lvim-init" ''
+    curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh | LV_BRANCH='release-1.2/neovim-0.8' bash /dev/stdin --yes --no-install-dependencies && cp ${../../../assets/vim/config.lua} ~/.config/lvim/config.lua
+  '';
+in
 {
+  home.packages = [ lvim-init ];
+
   programs.neovim = {
     enable = true;
-    extraConfig = builtins.readFile ../../../assets/vim/vimrc;
-    viAlias = true;
-    vimAlias = true;
+    withNodeJs = true;
+    withPython3 = true;
+    extraPackages = with pkgs; [ gcc rnix-lsp tree-sitter ];
   };
 
-  # Vim files in home
-  # Settings for CocNvim plugin
-  home.file.coc-settings = {
-    text = builtins.readFile ../../../assets/vim/coc-settings.json;
-    target = ".config/nvim/coc-settings.json";
-  };
-
-  # Vim plug to install other plugins, I currently prefer to rely on vim-plug
-  # rather than pkgs.vimPlugins, it is easier for me.
-  home.file.vim_plug = {
-    source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim";
-      sha256 = "sha256-4tvXyNcyrnl+UFnA3B6WS5RSmjLQfQUdXQWHJ0YqQ/0=";
-    };
-    target = ".local/share/nvim/site/autoload/plug.vim";
+  home.file.config = {
+    text = builtins.readFile ../../../assets/vim/config.lua;
+    target = ".config/lvim/config.lua";
   };
 }

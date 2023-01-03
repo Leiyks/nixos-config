@@ -55,6 +55,7 @@
   console.keyMap = "fr";
 
   environment = {
+    localBinInPath = true;
     systemPackages = [ ];
     variables = {
       EDITOR = "vim";

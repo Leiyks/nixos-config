@@ -34,7 +34,11 @@
 
     extraConfig = {
       init.defaultBranch = "main";
-      push.merge = true;
+
+      push = {
+        merge = true;
+        autoSetupRemote = true;
+      };
       commit.verbose = true;
 
       rebase = {

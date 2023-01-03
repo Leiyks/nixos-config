@@ -29,6 +29,8 @@
       "nix-shell" = "nix-shell --command 'exec zsh; return'";
       "gcans!" = "git commit -v -a -s -S --no-edit --amend";
       "gcns!" = "git commit -v -s -S --no-edit --amend";
+      "vim" = "lvim";
+      "vi" = "lvim";
     };
 
     ohMyZsh = {

@@ -1,40 +1,40 @@
 {
-    "coc.preferences.useQuickfixForLocations": true,
-    "suggest.noselect": true,
-    "python.formatting.blackArgs": [
-        "--line-length=120"
-    ],
-    "python.formatting.provider": "black",
-    "python.sortImports.args": [
-        "--profile",
-        "black"
-    ],
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": [
-        "--max-line-length=120"
-    ],
-    "python.linting.pydocstyleEnabled": true,
-    "python.linting.pydocstyleArgs": [
-        "--convention=google",
-        "--ignore=D100,D104"
-    ],
-    "python.linting.mypyEnabled": true,
-    "python.linting.mypyArgs": [
-        "--check-untyped_defs"
-    ],
-    "python.linting.banditEnabled": true,
-    "python.linting.banditArgs": [
-        "-s B101"
-    ],
-    "yaml.format.enable": true,
-    "languageserver": {
-        "nix": {
-            "command": "rnix-lsp",
-            "filetypes": [
-                "nix"
-            ]
-        }
-    },
-    "coc.preferences.formatOnSave": true,
-    "git.addGBlameToVirtualText": true
+  "coc.preferences.useQuickfixForLocations": true,
+  "suggest.noselect": true,
+  "python.formatting.blackArgs": [
+    "--line-length=120"
+  ],
+  "python.formatting.provider": "black",
+  "python.sortImports.args": [
+    "--profile",
+    "black"
+  ],
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+    "--max-line-length=120"
+  ],
+  "python.linting.pydocstyleEnabled": true,
+  "python.linting.pydocstyleArgs": [
+    "--convention=google",
+    "--ignore=D100,D104"
+  ],
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyArgs": [
+    "--check-untyped_defs"
+  ],
+  "python.linting.banditEnabled": true,
+  "python.linting.banditArgs": [
+    "-s B101"
+  ],
+  "yaml.format.enable": true,
+  "languageserver": {
+    "nix": {
+      "command": "rnix-lsp",
+      "filetypes": [
+        "nix"
+      ]
+    }
+  },
+  "coc.preferences.formatOnSave": true,
+  "git.addGBlameToVirtualText": true
 }

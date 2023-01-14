@@ -13,7 +13,6 @@
 
     zsh-autoenv.enable = true;
     interactiveShellInit = ''
-      neofetch
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
     '';
 
@@ -37,8 +36,10 @@
       enable = true;
       plugins = [
         "git"
+        "history"
         "sudo"
         "ssh-agent"
+        "last-working-dir"
         "zoxide"
       ];
       theme = "robbyrussell";

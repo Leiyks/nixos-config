@@ -20,6 +20,7 @@
       most
       zoxide
       neofetch
+      nushell
 
       # Video/Audio
       feh
@@ -45,6 +46,7 @@
       nixpkgs-fmt
       rnix-lsp
       nodejs
+      nodePackages.pnpm
       clang-tools_14
       gcc.out
       go

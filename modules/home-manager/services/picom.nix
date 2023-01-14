@@ -34,6 +34,11 @@
         "100:class_g = 'jetbrains-idea' && focused"
         "95:class_g = 'konsole' && focused"
         "75:class_g = 'konsole' && !focused"
+        "100:_NET_WM_STATE@[0]:32a = '_NET_WM_STATE_FULLSCREEN'"
+        "100:_NET_WM_STATE@[1]:32a = '_NET_WM_STATE_FULLSCREEN'"
+        "100:_NET_WM_STATE@[2]:32a = '_NET_WM_STATE_FULLSCREEN'"
+        "100:_NET_WM_STATE@[3]:32a = '_NET_WM_STATE_FULLSCREEN'"
+        "100:_NET_WM_STATE@[4]:32a = '_NET_WM_STATE_FULLSCREEN'"
       ];
 
       ### Fade ###

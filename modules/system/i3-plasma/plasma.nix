@@ -23,14 +23,7 @@
       ];
     };
 
-    desktopManager.plasma5 = {
-      enable = true;
-      excludePackages = with pkgs.libsForQt5; [
-        kwallet
-        kwalletmanager
-        kwin
-      ];
-    };
+    desktopManager.plasma5.enable = true;
   };
 }
 

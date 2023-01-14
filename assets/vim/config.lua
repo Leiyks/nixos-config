@@ -53,6 +53,7 @@ vim.opt.directory = "/home/leiyks/.config/lvim/tmp/swap"
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.autowrite = true
+vim.opt.spelllang = { "en", "fr" }
 
 -- Specific languages
 lvim.autocommands = {
@@ -206,3 +207,16 @@ require('onedark').load()
 
 lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+
+--- Specific Linting/Formatting parameters ---
+-- Formatter options
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+    { command = "black", args = { "--line-length=120" }, },
+}
+
+-- Linter options
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+    { command = "mypy", },
+}

@@ -11,6 +11,7 @@ lvim.builtin.lualine.sections.lualine_c = {
     components.diagnostics,
     components.lsp
 }
+lvim.lsp.automatic_servers_installation = true
 
 -- VIM options ---
 
@@ -29,9 +30,8 @@ vim.opt.visualbell = true
 vim.opt.belloff = "all"
 
 vim.opt.colorcolumn = "+1"
--- Not needed as lsp will handle it
--- vim.opt.list = true
--- vim.opt.listchars = "trail:¬"
+vim.opt.list = true
+vim.opt.listchars = "trail:¬"
 vim.opt.textwidth = 79
 
 -- Indentation

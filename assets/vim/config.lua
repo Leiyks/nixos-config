@@ -98,6 +98,21 @@ lvim.plugins = {
             vim.g.matchup_matchparen_offscreen = { method = "popup" }
         end,
     },
+    {
+        "windwp/nvim-spectre",
+        event = "BufRead",
+        config = function()
+            require("spectre").setup()
+        end,
+    },
+
+    -- Lsp
+    {
+        "tzachar/cmp-tabnine",
+        run = "./install.sh",
+        requires = "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
+    },
 
     -- UI
     { "p00f/nvim-ts-rainbow" },
@@ -134,25 +149,6 @@ lvim.plugins = {
                 show_cursorline = true, -- Enable 'cursorline' for the window while peeking
             }
         end,
-    },
-    {
-        "tpope/vim-fugitive",
-        cmd = {
-            "G",
-            "Git",
-            "Gdiffsplit",
-            "Gread",
-            "Gwrite",
-            "Ggrep",
-            "GMove",
-            "GDelete",
-            "GBrowse",
-            "GRemove",
-            "GRename",
-            "Glgrep",
-            "Gedit"
-        },
-        ft = { "fugitive" }
     },
     {
         "ray-x/lsp_signature.nvim",
@@ -192,9 +188,31 @@ lvim.plugins = {
             })
         end,
     },
+    {
+        "ahmedkhalf/lsp-rooter.nvim",
+        event = "BufRead",
+        config = function()
+            require("lsp-rooter").setup()
+        end,
+    },
+    {
+        "folke/trouble.nvim",
+        cmd = "TroubleToggle",
+    },
     { "tpope/vim-repeat" },
     { "tpope/vim-surround" },
     { "felipec/vim-sanegx", event = "BufRead" },
+    {
+        "folke/persistence.nvim",
+        event = "BufReadPre", -- this will only start session saving when an actual file was opened
+        module = "persistence",
+        config = function()
+            require("persistence").setup {
+                dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+                options = { "buffers", "curdir", "tabpages", "winsize" },
+            }
+        end,
+    },
 }
 
 -- Onedark theming
@@ -202,13 +220,45 @@ require('onedark').setup { style = 'deep' }
 require('onedark').load()
 
 -- Telescope settings
-require('telescope').load_extension('fzf')
-require('telescope').load_extension('projects')
+lvim.builtin.telescope.on_config_done = function(telescope)
+    pcall(telescope.load_extension, "fzf")
+    pcall(telescope.load_extension, "projects")
+    -- any other extensions loading
+end
 
 --- Key Mappings ---
 
 lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+
+-- spectre plugin
+lvim.keys.normal_mode["<Space>S"] = "<cmd>lua require('spectre').open()<cr>"
+lvim.keys.normal_mode["<Space>Sf"] = "viw:lua require('spectre').open_file_search()<cr>"
+lvim.keys.normal_mode["<Space>Sw"] = "<cmd>lua require('spectre').open_visual({select_word=true})<cr>"
+lvim.keys.normal_mode["<Space>Swf"] = "<cmd>lua require('spectre').open({path = vim.fn.fnameescape(vim.fn.expand('%:p:.')), search_text = vim.fn.expand('<cword>')})<cr>"
+
+-- toggleterm plugin
+lvim.builtin.terminal.open_mapping = "<C-t>"
+lvim.builtin.terminal.direction = "horizontal"
+
+-- Trouble plugin
+lvim.builtin.which_key.mappings["t"] = {
+    name = "Diagnostics",
+    t = { "<cmd>TroubleToggle<cr>", "trouble" },
+    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
+    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
+    q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+    l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+    r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+}
+
+-- Persistance plugin
+lvim.builtin.which_key.mappings["S"] = {
+    name = "Session",
+    c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+    l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+    Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+}
 
 --- Specific Linting/Formatting parameters ---
 -- Formatter options

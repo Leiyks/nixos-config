@@ -32,7 +32,7 @@ vim.opt.belloff = "all"
 
 vim.opt.colorcolumn = "+1"
 vim.opt.list = true
-vim.opt.listchars = "trail:¬"
+vim.opt.listchars = "trail:¬,tab:⍿·"
 vim.opt.textwidth = 79
 
 -- Indentation
@@ -61,7 +61,7 @@ lvim.autocommands = {
     {
         "BufEnter",
         {
-            pattern = { "*.py" },
+            pattern = { "*.py", "*.go" },
             command = "setlocal cc=120 textwidth=119",
         }
     },

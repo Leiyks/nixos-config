@@ -11,53 +11,68 @@
     homeDirectory = "/home/${user}";
 
     packages = with pkgs; [
-      # Terminal
+      ### Terminal ###
       htop
       ranger
       tldr
       tree
       bat
-      most
       zoxide
       neofetch
       nushell
 
-      # Video/Audio
+      ### Video/Audio ###
       feh
       vlc
 
-      # Apps
+      ### Apps ###
       brave
       firefox
       slack
       discord
       arandr
-      xsel # Usefull and needed for neovim clipboard
-      ripgrep
 
-      # File Management
+      ### File Management ###
       unzip
       unrar
 
-      # Languages
+      ### Languages ###
+      # Python
       poetry
       (python3.withPackages (p: [ p.pip p.black p.pytest ]))
+
+      # Json
       jq
+
+      # Nix
       nixpkgs-fmt
       rnix-lsp
+
+      # NodeJs
       nodejs
       nodePackages.pnpm
+
+      # C/C++
       clang-tools_14
       gcc.out
-      go
       gnumake
+
+      # Golang
+      go
+
+      # Rust
       cargo
 
-      # Editors
+      ### Editors ###
       jetbrains.idea-ultimate
       vscode
 
-      # System
+      # Lunar vim dependencies
+      ripgrep
+      fd
+      xsel
+
+      ### System ###
       refind
       efibootmgr
     ];

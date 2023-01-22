@@ -1,9 +1,11 @@
--- LVIM options ---
+--- LVIM options ---
 
 lvim.log.level = "warn"
 lvim.colorscheme = "onedark"
 lvim.format_on_save.enabled = true
+lvim.lsp.automatic_servers_installation = true
 
+-- Status bar configuration
 local components = require("lvim.core.lualine.components")
 lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.sections.lualine_c = {
@@ -11,9 +13,8 @@ lvim.builtin.lualine.sections.lualine_c = {
     components.diagnostics,
     components.lsp
 }
-lvim.lsp.automatic_servers_installation = true
 
--- VIM options ---
+--- VIM options ---
 
 -- UI
 vim.opt.guifont = "Hack Nerd Font:h17"
@@ -87,9 +88,6 @@ lvim.builtin.treesitter.rainbow.enable = true
 lvim.plugins = {
     -- Theming
     { "navarasu/onedark.nvim" },
-
-    -- treesitter
-    { "folke/twilight.nvim" },
 
     -- Editing
     { "terryma/vim-multiple-cursors" },
@@ -202,6 +200,10 @@ lvim.plugins = {
 -- Onedark theming
 require('onedark').setup { style = 'deep' }
 require('onedark').load()
+
+-- Telescope settings
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('projects')
 
 --- Key Mappings ---
 

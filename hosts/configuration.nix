@@ -54,13 +54,16 @@
 
   console.keyMap = "fr";
 
+  # Enable additional man pages
+  documentation.dev.enable = true;
+
   environment = {
     localBinInPath = true;
-    systemPackages = [ ];
+    systemPackages = [ pkgs.man-pages pkgs.man-pages-posix ];
     variables = {
-      EDITOR = "vim";
-      VISUAL = "vim";
-      PAGER = "most";
+      EDITOR = "lvim";
+      VISUAL = "lvim";
+      PAGER = "lvim +Man!";
     };
   };
 

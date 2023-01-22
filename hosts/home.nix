@@ -71,6 +71,7 @@
       ripgrep
       fd
       xsel
+      lazygit
 
       ### System ###
       refind

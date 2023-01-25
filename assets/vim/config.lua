@@ -82,7 +82,6 @@ lvim.builtin.treesitter.ensure_installed = "all"
 lvim.builtin.treesitter.ignore_install = { "" }
 lvim.builtin.treesitter.highlight.enable = true
 lvim.builtin.treesitter.matchup.enable = true
-lvim.builtin.treesitter.rainbow.enable = true
 
 -- Extra plugins
 lvim.plugins = {
@@ -115,7 +114,6 @@ lvim.plugins = {
     },
 
     -- UI
-    { "p00f/nvim-ts-rainbow" },
     {
         "f-person/git-blame.nvim",
         event = "BufRead",

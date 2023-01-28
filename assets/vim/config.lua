@@ -14,7 +14,11 @@ lvim.builtin.lualine.sections.lualine_c = {
     components.lsp
 }
 
---- VIM options ---
+-- builtins parameters
+lvim.builtin.cmp.cmdline.enable = true
+lvim.builtin.nvimtree.setup.auto_reload_on_write = true
+lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
+lvim.builtin.nvimtree.setup.filters.custom[3] = "^.git$"
 
 -- UI
 vim.opt.guifont = "Hack Nerd Font:h17"
@@ -88,8 +92,35 @@ lvim.plugins = {
     -- Theming
     { "navarasu/onedark.nvim" },
 
+    -- Navigation
+    {
+        "ggandor/lightspeed.nvim",
+        event = "BufRead",
+    },
+    {
+        "s1n7ax/nvim-window-picker",
+        tag = "1.*",
+        config = function()
+            require("window-picker").setup({
+                autoselect_one = true,
+                include_current = false,
+                filter_rules = {
+                    bo = {
+                        -- if the file type is one of following, the window will be ignored
+                        filetype = {},
+
+                        -- if the buffer type is one of following, the window will be ignored
+                        buftype = {},
+                    },
+                },
+                other_win_hl_color = "#e35e4f",
+            })
+        end,
+    },
+
     -- Editing
-    { "terryma/vim-multiple-cursors" },
+    { "mg979/vim-visual-multi" },
+    { "gcmt/wildfire.vim" },
     {
         "andymass/vim-matchup",
         event = "CursorMoved",
@@ -134,6 +165,13 @@ lvim.plugins = {
                 css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
                 css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
             })
+        end,
+    },
+    {
+        "folke/todo-comments.nvim",
+        event = "BufRead",
+        config = function()
+            require("todo-comments").setup()
         end,
     },
 
@@ -257,6 +295,28 @@ lvim.builtin.which_key.mappings["S"] = {
     l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
     Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
+
+-- Window picker
+local picker = require('window-picker')
+
+vim.keymap.set("n", ",w", function()
+    local picked_window_id = picker.pick_window({
+        include_current_win = true
+    }) or vim.api.nvim_get_current_win()
+    vim.api.nvim_set_current_win(picked_window_id)
+end, { desc = "Pick a window" })
+
+-- Swap two windows using the awesome window picker
+vim.keymap.set("n", ",W", function()
+    local window = picker.pick_window({
+        include_current_win = false
+    })
+    local target_buffer = vim.fn.winbufnr(window)
+    -- Set the target window to contain current buffer
+    vim.api.nvim_win_set_buf(window, 0)
+    -- Set current window to contain target buffer
+    vim.api.nvim_win_set_buf(0, target_buffer)
+end, { desc = 'Swap windows' })
 
 --- Specific Linting/Formatting parameters ---
 -- Formatter options

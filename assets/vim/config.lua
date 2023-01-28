@@ -138,10 +138,25 @@ lvim.plugins = {
 
     -- Lsp
     {
-        "tzachar/cmp-tabnine",
-        run = "./install.sh",
-        requires = "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
+        "zbirenbaum/copilot.lua",
+        event = { "VimEnter" },
+        config = function()
+            vim.defer_fn(function()
+                require("copilot").setup {
+                    plugin_manager_path = get_runtime_dir() .. "/site/pack/packer",
+                    suggestion = { enabled = false },
+                    panel = { enabled = false },
+                }
+            end, 100)
+        end,
+    },
+
+    {
+        "zbirenbaum/copilot-cmp",
+        after = { "copilot.lua", "nvim-cmp" },
+        config = function()
+            require("copilot_cmp").setup()
+        end
     },
 
     -- UI
@@ -297,6 +312,9 @@ lvim.builtin.which_key.mappings["S"] = {
     l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
     Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
+
+lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"
+table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
 
 -- Window picker
 local picker = require('window-picker')

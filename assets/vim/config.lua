@@ -265,7 +265,9 @@ end
 --- Key Mappings ---
 
 lvim.leader = "space"
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<Space>v"] = ":vsplit<cr>"
+lvim.keys.normal_mode["<Space>s"] = ":split<cr>"
+lvim.keys.normal_mode["f"] = "<C-w>w"
 
 -- spectre plugin
 lvim.keys.normal_mode["<Space>S"] = "<cmd>lua require('spectre').open()<cr>"

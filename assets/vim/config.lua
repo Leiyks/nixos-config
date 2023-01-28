@@ -14,12 +14,6 @@ lvim.builtin.lualine.sections.lualine_c = {
     components.lsp
 }
 
--- builtins parameters
-lvim.builtin.cmp.cmdline.enable = true
-lvim.builtin.nvimtree.setup.auto_reload_on_write = true
-lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
-lvim.builtin.nvimtree.setup.filters.custom[3] = "^.git$"
-
 -- UI
 vim.opt.guifont = "Hack Nerd Font:h17"
 vim.opt.signcolumn = "auto"
@@ -77,9 +71,18 @@ lvim.autocommands = {
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
+
 lvim.builtin.terminal.active = true
+
+lvim.builtin.cmp.cmdline.enable = true
+
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+lvim.builtin.nvimtree.setup.view.adaptive_size = true
+lvim.builtin.nvimtree.setup.auto_reload_on_write = true
+lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
+lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
+table.insert(lvim.builtin.nvimtree.setup.filters.custom, "^.git$")
+table.insert(lvim.builtin.nvimtree.setup.filters.custom, "cache$")
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "all"

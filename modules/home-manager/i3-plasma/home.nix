@@ -176,7 +176,7 @@ in
         "${modifier}+r" = ''mode "resize"'';
       };
 
-      menu = "krunner --replace";
+      menu = "${pkgs.plasma-workspace}/bin/krunner";
 
       defaultWorkspace = "workspace 1";
 

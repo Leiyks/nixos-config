@@ -15,7 +15,7 @@ lvim.builtin.lualine.sections.lualine_c = {
 }
 
 -- UI
-vim.opt.guifont = "Hack Nerd Font:h17"
+vim.opt.guifont = "Hack Nerd Font Mono:h17"
 vim.opt.signcolumn = "auto"
 vim.opt.updatetime = 100
 vim.opt.title = false
@@ -285,7 +285,7 @@ end
 lvim.leader = "space"
 lvim.keys.normal_mode["<Space>v"] = ":vsplit<cr>"
 lvim.keys.normal_mode["<Space>s"] = ":split<cr>"
-lvim.keys.normal_mode["f"] = "<C-w>w"
+lvim.keys.normal_mode["<C-f>"] = "<C-w>w"
 
 -- spectre plugin
 lvim.keys.normal_mode["<Space>S"] = "<cmd>lua require('spectre').open()<cr>"

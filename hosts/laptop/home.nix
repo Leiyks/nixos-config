@@ -13,6 +13,9 @@
     sessionVariables = {
       LD_LIBRARY_PATH =
         "\${LD_LIBRARY_PATH}:${pkgs.glib.out}/lib:${pkgs.zlib}/lib:${pkgs.stdenv.cc.cc.lib}/lib";
+
+      OPENAI_API_KEY =
+        "${builtins.readFile ~/.chatgpt_token }";
     };
 
     file.".config/wallpaper.jpg".source = ../../assets/themes/laptop_wallpaper.jpg;

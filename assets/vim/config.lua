@@ -96,10 +96,7 @@ lvim.plugins = {
     { "navarasu/onedark.nvim" },
 
     -- Navigation
-    {
-        "ggandor/lightspeed.nvim",
-        event = "BufRead",
-    },
+    { "ggandor/lightspeed.nvim", event = "BufRead", },
     {
         "s1n7ax/nvim-window-picker",
         tag = "1.*",
@@ -161,6 +158,28 @@ lvim.plugins = {
             require("copilot_cmp").setup()
         end
     },
+    {
+        "tzachar/cmp-tabnine",
+        run = "./install.sh",
+        requires = "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
+    },
+    {
+        "jackMort/ChatGPT.nvim",
+        config = function()
+            require("chatgpt").setup {
+                keymaps = {
+                    close = { "<C-c>", "<Esc>" },
+                    yank_last = "<C-y>",
+                    scroll_up = "<C-k>",
+                    scroll_down = "<C-j>",
+                    toggle_settings = "<C-o>",
+                    new_session = "<C-n>",
+                    cycle_windows = "<C-l>",
+                },
+            }
+        end
+    },
 
     -- UI
     {
@@ -190,6 +209,29 @@ lvim.plugins = {
         event = "BufRead",
         config = function()
             require("todo-comments").setup()
+        end,
+    },
+    { "MunifTanjim/nui.nvim" },
+    {
+        "folke/noice.nvim",
+        event = "VimEnter",
+        config = function()
+            require("noice").setup({
+                lsp = {
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true,
+                    },
+                    signature = { enabled = false }
+                },
+                presets = {
+                    bottom_search = true, -- use a classic bottom cmdline for search
+                    command_palette = true, -- position the cmdline and popupmenu together
+                    inc_rename = true, -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = true, -- add a border to hover docs and signature help
+                },
+            })
         end,
     },
 
@@ -249,12 +291,27 @@ lvim.plugins = {
             require("lsp-rooter").setup()
         end,
     },
-    {
-        "folke/trouble.nvim",
-        cmd = "TroubleToggle",
-    },
+    { "folke/trouble.nvim", cmd = "TroubleToggle" },
     { "tpope/vim-repeat" },
-    { "tpope/vim-surround" },
+    {
+        "kylechui/nvim-surround",
+        config = function()
+            require("nvim-surround").setup {
+                keymaps = {
+                    insert = "<C-g>s",
+                    insert_line = "<C-g>S",
+                    normal = "ys",
+                    normal_cur = "yss",
+                    normal_line = "yS",
+                    normal_cur_line = "ySS",
+                    visual = "S",
+                    visual_line = "gS",
+                    delete = "ds",
+                    change = "cs",
+                },
+            }
+        end,
+    },
     { "felipec/vim-sanegx", event = "BufRead" },
     {
         "folke/persistence.nvim",
@@ -267,6 +324,73 @@ lvim.plugins = {
             }
         end,
     },
+    {
+        "monaqa/dial.nvim",
+        config = function()
+            local status_ok, dial_config = pcall(require, "dial.config")
+            if not status_ok then
+                return
+            end
+
+            local augend = require "dial.augend"
+            dial_config.augends:register_group {
+                default = {
+                    augend.integer.alias.decimal,
+                    augend.integer.alias.hex,
+                    augend.date.alias["%d/%m/%Y"],
+                },
+                visual = {
+                    augend.integer.alias.decimal,
+                    augend.integer.alias.hex,
+                    augend.date.alias["%d/%m/%Y"],
+                    augend.constant.alias.alpha,
+                    augend.constant.alias.Alpha,
+                },
+                mygroup = {
+                    augend.constant.new {
+                        elements = { "and", "or" },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { "True", "False" },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { "public", "private" },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { "sad", "sad" },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { "&&", "||" },
+                        word = false,
+                        cyclic = true,
+                    },
+                    augend.constant.alias.bool,
+                    augend.integer.alias.decimal,
+                    augend.integer.alias.hex,
+                    augend.semver.alias.semver
+                },
+            }
+
+            local map = require "dial.map"
+
+            -- change augends in VISUAL mode
+            vim.api.nvim_set_keymap("n", "<C-a>", map.inc_normal "mygroup", { noremap = true })
+            vim.api.nvim_set_keymap("n", "<C-x>", map.dec_normal "mygroup", { noremap = true })
+            vim.api.nvim_set_keymap("v", "<C-a>", map.inc_visual "visual", { noremap = true })
+            vim.api.nvim_set_keymap("v", "<C-x>", map.dec_visual "visual", { noremap = true })
+            vim.api.nvim_set_keymap("v", "g<C-a>", map.inc_gvisual "visual", { noremap = true })
+            vim.api.nvim_set_keymap("v", "g<C-x>", map.dec_gvisual "visual", { noremap = true })
+        end,
+    },
+    { "hrsh7th/cmp-emoji" }
 }
 
 -- Onedark theming
@@ -285,7 +409,7 @@ end
 lvim.leader = "space"
 lvim.keys.normal_mode["<Space>v"] = ":vsplit<cr>"
 lvim.keys.normal_mode["<Space>s"] = ":split<cr>"
-lvim.keys.normal_mode["<C-f>"] = "<C-w>w"
+lvim.keys.normal_mode["<C-w>"] = "<C-w>w"
 
 -- spectre plugin
 lvim.keys.normal_mode["<Space>S"] = "<cmd>lua require('spectre').open()<cr>"
@@ -318,6 +442,9 @@ lvim.builtin.which_key.mappings["S"] = {
 
 lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"
 table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
+
+lvim.builtin.cmp.formatting.source_names["emoji"] = "(Emoji)"
+table.insert(lvim.builtin.cmp.sources, { name = "emoji" })
 
 -- Window picker
 local picker = require('window-picker')

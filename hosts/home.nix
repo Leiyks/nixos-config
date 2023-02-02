@@ -20,6 +20,7 @@
       zoxide
       neofetch
       nushell
+      wget
 
       ### Video/Audio ###
       feh
@@ -62,6 +63,10 @@
 
       # Rust
       cargo
+
+      # Java
+      openjdk17
+      maven
 
       ### Editors ###
       jetbrains.idea-ultimate

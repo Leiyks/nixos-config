@@ -6,12 +6,16 @@ lvim.format_on_save.enabled = true
 lvim.lsp.automatic_servers_installation = true
 
 -- Status bar configuration
-local components = require("lvim.core.lualine.components")
+local components = require "lvim.core.lualine.components"
 lvim.builtin.lualine.style = "default"
-lvim.builtin.lualine.sections.lualine_c = {
-    "diff",
-    components.diagnostics,
-    components.lsp
+lvim.builtin.lualine.options.component_separators = ""
+lvim.builtin.lualine.sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { components.branch, },
+    lualine_c = { components.diff, "searchcount" },
+    lualine_x = { components.diagnostics, components.lsp, components.spaces, },
+    lualine_y = { "fileformat", "filesize", components.filetype, },
+    lualine_z = { components.location, components.progress }
 }
 
 -- UI
@@ -83,6 +87,7 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
 table.insert(lvim.builtin.nvimtree.setup.filters.custom, "^.git$")
 table.insert(lvim.builtin.nvimtree.setup.filters.custom, "cache$")
+table.insert(lvim.builtin.nvimtree.setup.filters.custom, "__pycache__$")
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "all"
@@ -390,7 +395,13 @@ lvim.plugins = {
             vim.api.nvim_set_keymap("v", "g<C-x>", map.dec_gvisual "visual", { noremap = true })
         end,
     },
-    { "hrsh7th/cmp-emoji" }
+    { "hrsh7th/cmp-emoji" },
+    {
+        "LhKipp/nvim-nu",
+        config = function()
+            require("nu").setup {}
+        end,
+    }
 }
 
 -- Onedark theming
@@ -478,5 +489,5 @@ formatters.setup {
 -- Linter options
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-    { command = "mypy", },
+    { command = "mypy", args = { "--check-untyped-defs" }, },
 }

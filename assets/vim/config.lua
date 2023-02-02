@@ -228,16 +228,35 @@ lvim.plugins = {
                         ["vim.lsp.util.stylize_markdown"] = true,
                         ["cmp.entry.get_documentation"] = true,
                     },
+                    progress = { enabled = false },
                     signature = { enabled = false }
                 },
                 presets = {
                     bottom_search = true, -- use a classic bottom cmdline for search
+                    long_message_to_split = true,
                     command_palette = true, -- position the cmdline and popupmenu together
                     inc_rename = true, -- enables an input dialog for inc-rename.nvim
                     lsp_doc_border = true, -- add a border to hover docs and signature help
                 },
             })
         end,
+    },
+    {
+        "rcarriga/nvim-notify",
+        config = function()
+            require("notify").setup({
+                fps = 60,
+                stages = 'slide',
+                background_colour = 'FloatShadow',
+                timeout = 3000,
+                render = "compact"
+            })
+        end,
+    },
+    {
+        "j-hui/fidget.nvim", config = function()
+            require('fidget').setup()
+        end
     },
 
     -- Misc
@@ -255,7 +274,7 @@ lvim.plugins = {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
         config = function() require "lsp_signature".on_attach({
-                bind = true, -- This is mandatory, otherwise border config won't get registered.
+                bind = true,
                 handler_opts = { border = "rounded" }
             })
         end,
@@ -412,6 +431,7 @@ require('onedark').load()
 lvim.builtin.telescope.on_config_done = function(telescope)
     pcall(telescope.load_extension, "fzf")
     pcall(telescope.load_extension, "projects")
+    pcall(telescope.load_extension, "notify")
     -- any other extensions loading
 end
 
@@ -427,6 +447,9 @@ lvim.keys.normal_mode["<Space>S"] = "<cmd>lua require('spectre').open()<cr>"
 lvim.keys.normal_mode["<Space>Sf"] = "viw:lua require('spectre').open_file_search()<cr>"
 lvim.keys.normal_mode["<Space>Sw"] = "<cmd>lua require('spectre').open_visual({select_word=true})<cr>"
 lvim.keys.normal_mode["<Space>Swf"] = "<cmd>lua require('spectre').open({path = vim.fn.fnameescape(vim.fn.expand('%:p:.')), search_text = vim.fn.expand('<cword>')})<cr>"
+
+-- Vim-notify plugin
+lvim.keys.normal_mode["<Space>n"] = "<cmd>lua require('notify').dismiss()<cr>"
 
 -- toggleterm plugin
 lvim.builtin.terminal.open_mapping = "<C-t>"
@@ -449,6 +472,10 @@ lvim.builtin.which_key.mappings["S"] = {
     c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
     l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
     Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+}
+
+lvim.builtin.which_key.mappings["sn"] = {
+    "<cmd>lua require'telescope'.extensions.notify.notify{}<CR>", "Notifications"
 }
 
 lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"

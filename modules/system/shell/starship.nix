@@ -25,11 +25,12 @@
 
       status = {
         disabled = false;
-        symbol = "❌";
-        not_executable_symbol = "🚫";
-        not_found_symbol = "🔍";
-        sigint_symbol = "🧱";
-        signal_symbol = "⚡";
+        format = "[$symbol ($maybe_int )]($style)";
+        symbol = "";
+        not_executable_symbol = "󰂭";
+        not_found_symbol = "󰍉";
+        sigint_symbol = "󰟾";
+        signal_symbol = "";
         style = "bold red";
         map_symbol = true;
       };

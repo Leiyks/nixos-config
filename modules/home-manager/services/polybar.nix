@@ -5,7 +5,7 @@ let
     alsaSupport = true;
     mpdSupport = true;
     pulseSupport = true;
-    i3GapsSupport = true;
+    i3Support = true;
   };
 in
 with host; {
@@ -16,8 +16,7 @@ with host; {
         package = mypolybar;
 
         script = ''
-          export
-          PATH="$PATH:${pkgs.gnugrep}/bin:${pkgs.gawk}/bin:${pkgs.coreutils}/bin:${pkgs.gnused}/bin"
+          export PATH="$PATH:${pkgs.gnugrep}/bin:${pkgs.gawk}/bin:${pkgs.coreutils}/bin:${pkgs.gnused}/bin"
           polybar main &
           polybar sec &
         '';
@@ -193,11 +192,11 @@ with host; {
             ws-icon-0 = "1;";
             ws-icon-1 = "2;";
             ws-icon-2 = "3;";
-            ws-icon-3 = "4";
-            ws-icon-4 = "5";
-            ws-icon-5 = "6";
-            ws-icon-6 = "7";
-            ws-icon-7 = "8";
+            ws-icon-3 = "4;";
+            ws-icon-4 = "5;";
+            ws-icon-5 = "6;";
+            ws-icon-6 = "7;";
+            ws-icon-7 = "8;";
             ws-icon-default = "";
 
             format = "<label-state> <label-mode>";

@@ -9,7 +9,7 @@
     (import ../../modules/system/krb5);
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_0;
+    kernelPackages = pkgs.linuxPackages_6_1;
 
     loader = {
       systemd-boot.enable = true;

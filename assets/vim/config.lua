@@ -247,7 +247,9 @@ lvim.plugins = {
     },
     {
         "j-hui/fidget.nvim", config = function()
-            require('fidget').setup()
+            require('fidget').setup {
+                window = { blend = 0, },
+            }
         end
     },
 
@@ -416,7 +418,13 @@ lvim.plugins = {
 }
 
 -- Onedark theming
-require('onedark').setup { style = 'deep' }
+require('onedark').setup {
+    style = 'deep',
+    transparent = true,
+    colors = {
+        fg = '#ededed',
+    },
+}
 require('onedark').load()
 
 -- Telescope settings

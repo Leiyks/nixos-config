@@ -32,7 +32,7 @@
         "100:class_g = 'Slack' && focused"
         "100:class_g = 'peek' && focused"
         "100:class_g = 'jetbrains-idea' && focused"
-        "95:class_g = 'konsole' && focused"
+        "90:class_g = 'konsole' && focused"
         "75:class_g = 'konsole' && !focused"
         "100:_NET_WM_STATE@[0]:32a = '_NET_WM_STATE_FULLSCREEN'"
         "100:_NET_WM_STATE@[1]:32a = '_NET_WM_STATE_FULLSCREEN'"

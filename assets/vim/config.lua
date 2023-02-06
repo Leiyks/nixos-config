@@ -188,14 +188,6 @@ lvim.plugins = {
 
     -- UI
     {
-        "f-person/git-blame.nvim",
-        event = "BufRead",
-        config = function()
-            vim.cmd "highlight default link gitblame SpecialComment"
-            vim.g.gitblame_enabled = 0
-        end,
-    },
-    {
         "norcalli/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup({ "*" }, {
@@ -511,6 +503,7 @@ end, { desc = 'Swap windows' })
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
     { command = "black", args = { "--line-length=120" }, },
+    { command = "jq" },
 }
 
 -- Linter options
@@ -518,3 +511,8 @@ local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
     { command = "mypy", args = { "--check-untyped-defs" }, },
 }
+
+-- LSP options
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
+require("lspconfig").clangd.setup({ capabilities = capabilities })

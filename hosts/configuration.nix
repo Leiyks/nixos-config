@@ -63,7 +63,7 @@
     variables = {
       EDITOR = "lvim";
       VISUAL = "lvim";
-      PAGER = "lvim +Man!";
+      PAGER = "most +Man!";
     };
   };
 

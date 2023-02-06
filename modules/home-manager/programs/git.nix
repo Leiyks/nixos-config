@@ -52,6 +52,7 @@
       core = {
         editor = "vim";
         autocrlf = "input";
+        pager = "LESS=FRX less";
       };
     };
   };

@@ -26,12 +26,12 @@
       opacityRules = [
         "100:class_g = 'firefox' && focused"
         "100:class_g = 'Brave-browser' && focused"
-        "100:class_g = 'Code' && focused"
+        "95:class_g = 'Code' && focused"
         "100:class_g = 'vlc' && focused"
         "100:class_g = 'discord' && focused"
         "100:class_g = 'Slack' && focused"
         "100:class_g = 'peek' && focused"
-        "100:class_g = 'jetbrains-idea' && focused"
+        "95:class_g = 'jetbrains-idea' && focused"
         "90:class_g = 'konsole' && focused"
         "75:class_g = 'konsole' && !focused"
         "100:_NET_WM_STATE@[0]:32a = '_NET_WM_STATE_FULLSCREEN'"
@@ -90,6 +90,8 @@
         blur-background-exclude = [
           "window_type = 'dock'"
           "window_type = 'desktop'"
+          "class_g = 'Code'"
+          "class_g = 'jetbrains-idea'"
           "_GTK_FRAME_EXTENTS@:c"
         ];
 

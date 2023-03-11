@@ -6,7 +6,6 @@
     enable = true;
     enableCompletion = true;
     enableBashCompletion = true;
-    autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
 
     histSize = 100000;
@@ -22,10 +21,8 @@
       "..." = "cd ../..";
       "...." = "cd ../../../";
       "....." = "cd ../../../../";
-      "ll" = "ls -lhAa --color=auto";
       "restish" = "noglog restish";
       "cat" = "bat";
-      "nix-shell" = "nix-shell --command 'exec zsh; return'";
       "gcans!" = "git commit -v -a -s -S --no-edit --amend";
       "gcns!" = "git commit -v -s -S --no-edit --amend";
       "vim" = "lvim";
@@ -41,6 +38,7 @@
         "ssh-agent"
         "last-working-dir"
         "zoxide"
+        "colored-man-pages"
       ];
       theme = "robbyrussell";
     };

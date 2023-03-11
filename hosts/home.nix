@@ -15,7 +15,7 @@
       htop
       ranger
       tldr
-      tree
+      exa
       bat
       zoxide
       neofetch

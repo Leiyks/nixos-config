@@ -1,21 +1,125 @@
-{ pkgs, globalPkgDir, ... }:
+{ config, pkgs, ... }:
+# LunarVim configuration
+#
+# WARNING: Post install step
+# For now the sumneko_lua language server does not work if installed by Packer.
+# It is installed by nix directly but it is not possible to change the path of
+# the command only for the default config. As a result to make the lua lsp
+# server work you need to create a symlink instead of the binary built by
+# Mason.
+#
+# Open the logs of the lsp with :LspLog
+# Locate the `lua-language-server` binary that is not working in the logs
+# Delete it
+# Create a symlink instead: `ln -s $(which lua-language-server) <path>`
 let
-  lvim-init = pkgs.writeShellScriptBin "lvim-init" ''
-    curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh | LV_BRANCH='release-1.2/neovim-0.8' bash /dev/stdin --yes --no-install-dependencies && cp ${../../../assets/vim/config.lua} ~/.config/lvim/config.lua
-  '';
+  env = {
+    LUNARVIM_RUNTIME_DIR = "${config.home.homeDirectory}/.local/share/lvim";
+    LUNARVIM_CONFIG_DIR = "${config.home.homeDirectory}/.config/lvim";
+    LUNARVIM_CACHE_DIR = "${config.home.homeDirectory}/.cache/lvim";
+    LUNARVIM_BASE_DIR = "${lunarvimDrv}/lvim";
+  };
+
+  extraPackages = with pkgs; [
+    # General dependencies
+    git
+    gcc
+    tree-sitter
+
+    # Nix dependencies
+    rnix-lsp
+    nixpkgs-fmt
+
+    # Lua dependencies
+    sumneko-lua-language-server
+    luarocks
+
+    # Rust dependencies
+    cargo
+    ripgrep
+    fd
+
+    # Mason dependencies
+    julia
+    php
+    php.packages.composer
+
+    # Other dependencies
+    xsel
+    lazygit
+  ];
+
+  nvim = config.programs.neovim.finalPackage;
+
+  lunarvimDrv = pkgs.stdenv.mkDerivation
+    {
+      pname = "lunarvim";
+      version = "1.2.0";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "LunarVim";
+        repo = "LunarVim";
+        rev = "fc6873809934917b470bff1b072171879899a36b";
+        sha256 = "sha256-3yNxl9ofAQjoFuSHPU/BDQEv5yhR3IvBXe5hjK8wptY=";
+      };
+
+      nativeBuildInputs = [ pkgs.makeWrapper pkgs.coreutils pkgs.gnused ];
+      buildInputs = [ nvim ];
+
+      buildPhase = ''
+        echo hello LunarVim
+      '';
+
+      installPhase = ''
+            runHook preInstall
+            mkdir -p $out/bin
+            cp -r $(pwd) $out/lvim
+            export shim="$out/lvim/utils/bin/lvim.template"
+            substituteInPlace "$shim" \
+            --replace "exec -a lvim nvim" "exec -a lvim ${nvim}/bin/nvim" \
+            --replace "RUNTIME_DIR_VAR" "\"${env.LUNARVIM_RUNTIME_DIR}\"" \
+            --replace "CONFIG_DIR_VAR" "\"${env.LUNARVIM_CONFIG_DIR}\"" \
+            --replace "CACHE_DIR_VAR" "\"${env.LUNARVIM_CACHE_DIR}\"" \
+            --replace "BASE_DIR_VAR" "\"$out/lvim\""
+            chmod +x "$shim"
+            makeWrapper "$shim" "$out/bin/lvim" \
+            --set LUNARVIM_RUNTIME_DIR "${env.LUNARVIM_RUNTIME_DIR}" \
+            --set LUNARVIM_CONFIG_DIR "${env.LUNARVIM_CONFIG_DIR}" \
+            --set LUNARVIM_CACHE_DIR "${env.LUNARVIM_CACHE_DIR}" \
+            --set LUNARVIM_BASE_DIR "$out/lvim" \
+            --prefix PATH : ${pkgs.lib.makeBinPath (extraPackages ++ [ nvim ])}
+        runHook postInstall
+      '';
+    };
 in
 {
-  home.packages = [ lvim-init ];
+  home.packages = [
+    pkgs.nodePackages.neovim
+    pkgs.lua-language-server
+    lunarvimDrv
+  ];
 
   programs.neovim = {
     enable = true;
     withNodeJs = true;
     withPython3 = true;
-    extraPackages = with pkgs; [ gcc rnix-lsp tree-sitter ];
+    extraPython3Packages = ps: [
+      ps.pynvim
+    ];
+    extraLuaPackages = ps: [
+      ps.luarocks
+    ];
+    inherit extraPackages;
   };
 
-  home.file.config = {
-    text = builtins.readFile ../../../assets/vim/config.lua;
-    target = ".config/lvim/config.lua";
+  home.sessionVariables = env;
+
+  home.file.".config/lvim/config.lua" = {
+    source = ../../../assets/vim/config.lua;
   };
+
+  # FT Plugin s for some filetype specific configuration
+  # home.file.".config/lvim/after" = {
+  #   source = ../../assets/config/lvim/after;
+  # };
 }

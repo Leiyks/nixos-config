@@ -11,10 +11,10 @@ lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.component_separators = ""
 lvim.builtin.lualine.sections = {
     lualine_a = { 'mode' },
-    lualine_b = { components.branch, },
-    lualine_c = { components.diff, "searchcount" },
-    lualine_x = { components.diagnostics, components.lsp, components.spaces, },
-    lualine_y = { "fileformat", "filesize", components.filetype, },
+    lualine_b = { components.branch, components.diff },
+    lualine_c = { components.diagnostics, components.lsp },
+    lualine_x = { "searchcount", components.spaces },
+    lualine_y = { "filename", "filesize", components.filetype, "fileformat" },
     lualine_z = { components.location, components.progress }
 }
 
@@ -37,6 +37,8 @@ vim.opt.list = true
 vim.opt.listchars = "trail:¬,tab:⍿·"
 vim.opt.textwidth = 79
 
+vim.opt.autowriteall = true
+
 -- Indentation
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -49,7 +51,7 @@ vim.opt.undofile = true
 vim.opt.swapfile = true
 
 vim.opt.backupdir = "/home/leiyks/.config/lvim/tmp/backup"
-vim.opt.undodir = "/home/leiyks/.config/lvim/tmp/backup"
+vim.opt.undodir = "/home/leiyks/.config/lvim/tmp/undo"
 vim.opt.directory = "/home/leiyks/.config/lvim/tmp/swap"
 
 -- Misc
@@ -57,6 +59,8 @@ vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.autowrite = true
 vim.opt.spelllang = { "en", "fr" }
+
+vim.g.loaded_perl_provider = 0
 
 -- Specific languages
 lvim.autocommands = {
@@ -102,30 +106,9 @@ lvim.plugins = {
 
     -- Navigation
     { "ggandor/lightspeed.nvim", event = "BufRead", },
-    {
-        "s1n7ax/nvim-window-picker",
-        tag = "1.*",
-        config = function()
-            require("window-picker").setup({
-                autoselect_one = true,
-                include_current = false,
-                filter_rules = {
-                    bo = {
-                        -- if the file type is one of following, the window will be ignored
-                        filetype = {},
-
-                        -- if the buffer type is one of following, the window will be ignored
-                        buftype = {},
-                    },
-                },
-                other_win_hl_color = "#e35e4f",
-            })
-        end,
-    },
 
     -- Editing
     { "mg979/vim-visual-multi" },
-    { "gcmt/wildfire.vim" },
     {
         "andymass/vim-matchup",
         event = "CursorMoved",
@@ -136,9 +119,7 @@ lvim.plugins = {
     {
         "windwp/nvim-spectre",
         event = "BufRead",
-        config = function()
-            require("spectre").setup()
-        end,
+        config = function() require("spectre").setup() end,
     },
 
     -- Lsp
@@ -159,9 +140,7 @@ lvim.plugins = {
     {
         "zbirenbaum/copilot-cmp",
         after = { "copilot.lua", "nvim-cmp" },
-        config = function()
-            require("copilot_cmp").setup()
-        end
+        config = function() require("copilot_cmp").setup() end
     },
     {
         "tzachar/cmp-tabnine",
@@ -204,9 +183,7 @@ lvim.plugins = {
     {
         "folke/todo-comments.nvim",
         event = "BufRead",
-        config = function()
-            require("todo-comments").setup()
-        end,
+        config = function() require("todo-comments").setup() end,
     },
     { "MunifTanjim/nui.nvim" },
     {
@@ -224,11 +201,11 @@ lvim.plugins = {
                     signature = { enabled = false }
                 },
                 presets = {
-                    bottom_search = true, -- use a classic bottom cmdline for search
+                    bottom_search = true,
                     long_message_to_split = true,
-                    command_palette = true, -- position the cmdline and popupmenu together
-                    inc_rename = true, -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = true, -- add a border to hover docs and signature help
+                    command_palette = true,
+                    inc_rename = true,
+                    lsp_doc_border = true,
                 },
             })
         end,
@@ -246,7 +223,8 @@ lvim.plugins = {
         end,
     },
     {
-        "j-hui/fidget.nvim", config = function()
+        "j-hui/fidget.nvim",
+        config = function()
             require('fidget').setup {
                 window = { blend = 0, },
             }
@@ -255,19 +233,10 @@ lvim.plugins = {
 
     -- Misc
     {
-        "nacro90/numb.nvim",
-        event = "BufRead",
-        config = function()
-            require("numb").setup {
-                show_numbers = true, -- Enable 'number' for the window while peeking
-                show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-            }
-        end,
-    },
-    {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
-        config = function() require "lsp_signature".on_attach({
+        config = function()
+            require "lsp_signature".on_attach({
                 bind = true,
                 handler_opts = { border = "rounded" }
             })
@@ -295,9 +264,7 @@ lvim.plugins = {
         config = function()
             require("nvim-lastplace").setup({
                 lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-                lastplace_ignore_filetype = {
-                    "gitcommit", "gitrebase", "svn", "hgcommit",
-                },
+                lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit", },
                 lastplace_open_folds = true,
             })
         end,
@@ -305,9 +272,7 @@ lvim.plugins = {
     {
         "ahmedkhalf/lsp-rooter.nvim",
         event = "BufRead",
-        config = function()
-            require("lsp-rooter").setup()
-        end,
+        config = function() require("lsp-rooter").setup() end,
     },
     { "folke/trouble.nvim", cmd = "TroubleToggle" },
     { "tpope/vim-repeat" },
@@ -330,10 +295,9 @@ lvim.plugins = {
             }
         end,
     },
-    { "felipec/vim-sanegx", event = "BufRead" },
     {
         "folke/persistence.nvim",
-        event = "BufReadPre", -- this will only start session saving when an actual file was opened
+        event = "BufReadPre",
         module = "persistence",
         config = function()
             require("persistence").setup {
@@ -343,78 +307,11 @@ lvim.plugins = {
         end,
     },
     {
-        "monaqa/dial.nvim",
-        config = function()
-            local status_ok, dial_config = pcall(require, "dial.config")
-            if not status_ok then
-                return
-            end
-
-            local augend = require "dial.augend"
-            dial_config.augends:register_group {
-                default = {
-                    augend.integer.alias.decimal,
-                    augend.integer.alias.hex,
-                    augend.date.alias["%d/%m/%Y"],
-                },
-                visual = {
-                    augend.integer.alias.decimal,
-                    augend.integer.alias.hex,
-                    augend.date.alias["%d/%m/%Y"],
-                    augend.constant.alias.alpha,
-                    augend.constant.alias.Alpha,
-                },
-                mygroup = {
-                    augend.constant.new {
-                        elements = { "and", "or" },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { "True", "False" },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { "public", "private" },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { "sad", "sad" },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { "&&", "||" },
-                        word = false,
-                        cyclic = true,
-                    },
-                    augend.constant.alias.bool,
-                    augend.integer.alias.decimal,
-                    augend.integer.alias.hex,
-                    augend.semver.alias.semver
-                },
-            }
-
-            local map = require "dial.map"
-
-            -- change augends in VISUAL mode
-            vim.api.nvim_set_keymap("n", "<C-a>", map.inc_normal "mygroup", { noremap = true })
-            vim.api.nvim_set_keymap("n", "<C-x>", map.dec_normal "mygroup", { noremap = true })
-            vim.api.nvim_set_keymap("v", "<C-a>", map.inc_visual "visual", { noremap = true })
-            vim.api.nvim_set_keymap("v", "<C-x>", map.dec_visual "visual", { noremap = true })
-            vim.api.nvim_set_keymap("v", "g<C-a>", map.inc_gvisual "visual", { noremap = true })
-            vim.api.nvim_set_keymap("v", "g<C-x>", map.dec_gvisual "visual", { noremap = true })
-        end,
+        "LhKipp/nvim-nu",
+        config = function() require("nu").setup {} end,
     },
     { "hrsh7th/cmp-emoji" },
-    {
-        "LhKipp/nvim-nu",
-        config = function()
-            require("nu").setup {}
-        end,
-    }
+    { "felipec/vim-sanegx", event = "BufRead" },
 }
 
 -- Onedark theming
@@ -483,28 +380,6 @@ table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
 
 lvim.builtin.cmp.formatting.source_names["emoji"] = "(Emoji)"
 table.insert(lvim.builtin.cmp.sources, { name = "emoji" })
-
--- Window picker
-local picker = require('window-picker')
-
-vim.keymap.set("n", ",w", function()
-    local picked_window_id = picker.pick_window({
-        include_current_win = true
-    }) or vim.api.nvim_get_current_win()
-    vim.api.nvim_set_current_win(picked_window_id)
-end, { desc = "Pick a window" })
-
--- Swap two windows using the awesome window picker
-vim.keymap.set("n", ",W", function()
-    local window = picker.pick_window({
-        include_current_win = false
-    })
-    local target_buffer = vim.fn.winbufnr(window)
-    -- Set the target window to contain current buffer
-    vim.api.nvim_win_set_buf(window, 0)
-    -- Set current window to contain target buffer
-    vim.api.nvim_win_set_buf(0, target_buffer)
-end, { desc = 'Swap windows' })
 
 --- Specific Linting/Formatting parameters ---
 -- Formatter options

@@ -46,8 +46,6 @@
       jq
 
       # Nix
-      nixpkgs-fmt
-      rnix-lsp
 
       # NodeJs
       nodejs
@@ -61,9 +59,6 @@
       # Golang
       go
 
-      # Rust
-      cargo
-
       # Java
       openjdk17
       maven
@@ -71,12 +66,6 @@
       ### Editors ###
       jetbrains.idea-ultimate
       vscode
-
-      # Lunar vim dependencies
-      ripgrep
-      fd
-      xsel
-      lazygit
 
       ### System ###
       refind

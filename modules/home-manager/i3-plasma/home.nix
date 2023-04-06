@@ -234,7 +234,7 @@ in
 
       for_window [title="plasma-desktop"] floating enable; border none
       for_window [title="win7"] floating enable; border none
-      for_window [title="Desktop — Plasma"] kill; border pixel 1
+      for_window [title=".*Desktop.*Plasma.*"] kill; border pixel 1
       for_window [title="i3_help"] floating enable sticky enable border pixel 1
 
       no_focus [class="plasmashell" window_type="notification"]

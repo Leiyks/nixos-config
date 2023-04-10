@@ -141,6 +141,11 @@ lvim.plugins = {
         event = "BufRead",
         config = function() require("spectre").setup() end,
     },
+    {
+        "kylechui/nvim-surround",
+        config = function() require("nvim-surround").setup {} end,
+    },
+    { "tpope/vim-repeat" },
 
     -- Lsp
     {
@@ -173,13 +178,13 @@ lvim.plugins = {
         "norcalli/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup({ "*" }, {
-                RGB = true,      -- #RGB hex codes
-                RRGGBB = true,   -- #RRGGBB hex codes
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true,   -- CSS rgb() and rgba() functions
-                hsl_fn = true,   -- CSS hsl() and hsla() functions
-                css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                RGB = true,
+                RRGGBB = true,
+                RRGGBBAA = true,
+                rgb_fn = true,
+                hsl_fn = true,
+                css = true,
+                css_fn = true,
             })
         end,
     },
@@ -290,16 +295,11 @@ lvim.plugins = {
         config = function() require("lsp-rooter").setup() end,
     },
     {
-        "kylechui/nvim-surround",
-        config = function() require("nvim-surround").setup {} end,
-    },
-    {
         "LhKipp/nvim-nu",
         config = function() require("nu").setup {} end,
     },
-    { "folke/trouble.nvim",  cmd = "TroubleToggle" },
-    { "tpope/vim-repeat" },
-    { "felipec/vim-sanegx",  event = "BufRead" },
+    { "folke/trouble.nvim", cmd = "TroubleToggle" },
+    { "felipec/vim-sanegx", event = "BufRead" },
 }
 
 -- Telescope settings
@@ -314,8 +314,12 @@ end
 -- General
 lvim.leader = "space"
 lvim.keys.normal_mode["<Space>v"] = ":vsplit<cr>"
-lvim.keys.normal_mode["<Space>s"] = ":split<cr>"
+lvim.keys.normal_mode["<Space>sl"] = ":split<cr>"
 
+lvim.keys.normal_mode["<M-Up>"] = "<C-w>k"
+lvim.keys.normal_mode["<M-Down>"] = "<C-w>j"
+lvim.keys.normal_mode["<M-Right>"] = "<C-w>l"
+lvim.keys.normal_mode["<M-Left>"] = "<C-w>h"
 -- Spectre plugin
 lvim.keys.normal_mode["<Space>Sp"] = "<cmd>lua require('spectre').open_visual({select_word=true})<cr>"
 

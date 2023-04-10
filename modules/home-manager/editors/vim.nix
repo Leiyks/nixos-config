@@ -43,6 +43,7 @@ let
     julia
     php
     php.packages.composer
+    powershell
 
     # Other dependencies
     xsel
@@ -118,8 +119,7 @@ in
     source = ../../../assets/vim/config.lua;
   };
 
-  # FT Plugin s for some filetype specific configuration
-  # home.file.".config/lvim/after" = {
-  #   source = ../../assets/config/lvim/after;
-  # };
+  home.file.".config/lvim/after" = {
+    source = ../../../assets/vim/after;
+  };
 }

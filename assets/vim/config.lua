@@ -4,9 +4,11 @@ lvim.log.level = "warn"
 lvim.colorscheme = "onedark"
 lvim.format_on_save.enabled = true
 lvim.lsp.automatic_servers_installation = true
+lvim.transparent_window = true
 
 -- Status bar configuration
 local components = require "lvim.core.lualine.components"
+lvim.builtin.lualine.options.theme = "tokyonight"
 lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.component_separators = ""
 lvim.builtin.lualine.sections = {
@@ -22,8 +24,8 @@ lvim.builtin.lualine.sections = {
 vim.opt.guifont = "Hack Nerd Font Mono:h17"
 vim.opt.signcolumn = "auto"
 vim.opt.updatetime = 100
-vim.opt.title = false
-vim.opt.cursorline = false
+vim.opt.termguicolors = true
+vim.opt.clipboard = "unnamedplus"
 
 vim.opt.wrap = true
 vim.opt.linebreak = true
@@ -37,6 +39,7 @@ vim.opt.list = true
 vim.opt.listchars = "trail:¬,tab:⍿·"
 vim.opt.textwidth = 79
 
+vim.opt.autoread = true
 vim.opt.autowriteall = true
 
 -- Indentation
@@ -62,25 +65,27 @@ vim.opt.spelllang = { "en", "fr" }
 
 vim.g.loaded_perl_provider = 0
 
--- Specific languages
-lvim.autocommands = {
-    {
-        "BufEnter",
-        {
-            pattern = { "*.py", "*.go" },
-            command = "setlocal cc=120 textwidth=119",
-        }
-    },
-}
-
 --- Plugins ---
 
 -- Builtins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
+lvim.builtin.alpha.dashboard.section.buttons.entries[6] = {
+    "c",
+    lvim.icons.ui.Gear .. "  Configuration",
+    "<CMD>edit /home/leiyks/git/nixos-config/assets/vim/config.lua <CR>"
+}
+
+-- Dashboard configuration
+
+lvim.builtin.alpha.dashboard.section.buttons.entries[7] = {
+    "x",
+    "  Nixos Configuration",
+    "<CMD>edit /home/leiyks/git/nixos-config/flake.nix <CR>"
+}
 
 lvim.builtin.terminal.active = true
+lvim.builtin.terminal.insert_mappings = false
+lvim.builtin.terminal.open_mapping = "<C-t>"
+lvim.builtin.terminal.direction = "horizontal"
 
 lvim.builtin.cmp.cmdline.enable = true
 
@@ -102,7 +107,22 @@ lvim.builtin.treesitter.matchup.enable = true
 -- Extra plugins
 lvim.plugins = {
     -- Theming
-    { "navarasu/onedark.nvim" },
+    {
+        "navarasu/onedark.nvim",
+        config = function()
+            require('onedark').setup {
+                style = 'deep',
+                colors = {
+                    fg = '#ededed',
+                    dark_bg = '#16161e',
+                },
+                highlights = {
+                    ColorColumn = { bg = '$dark_bg' },
+                }
+            }
+            require('onedark').load()
+        end,
+    },
 
     -- Navigation
     { "ggandor/lightspeed.nvim", event = "BufRead", },
@@ -136,7 +156,6 @@ lvim.plugins = {
             end, 100)
         end,
     },
-
     {
         "zbirenbaum/copilot-cmp",
         after = { "copilot.lua", "nvim-cmp" },
@@ -148,35 +167,19 @@ lvim.plugins = {
         requires = "hrsh7th/nvim-cmp",
         event = "InsertEnter",
     },
-    {
-        "jackMort/ChatGPT.nvim",
-        config = function()
-            require("chatgpt").setup {
-                keymaps = {
-                    close = { "<C-c>", "<Esc>" },
-                    yank_last = "<C-y>",
-                    scroll_up = "<C-k>",
-                    scroll_down = "<C-j>",
-                    toggle_settings = "<C-o>",
-                    new_session = "<C-n>",
-                    cycle_windows = "<C-l>",
-                },
-            }
-        end
-    },
 
     -- UI
     {
         "norcalli/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup({ "*" }, {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
+                RGB = true,      -- #RGB hex codes
+                RRGGBB = true,   -- #RRGGBB hex codes
                 RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+                rgb_fn = true,   -- CSS rgb() and rgba() functions
+                hsl_fn = true,   -- CSS hsl() and hsla() functions
+                css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
             })
         end,
     },
@@ -233,67 +236,21 @@ lvim.plugins = {
 
     -- Misc
     {
-        "ray-x/lsp_signature.nvim",
-        event = "BufRead",
-        config = function()
-            require "lsp_signature".on_attach({
-                bind = true,
-                handler_opts = { border = "rounded" }
-            })
-        end,
-    },
-    {
         "karb94/neoscroll.nvim",
         event = "WinScrolled",
         config = function()
             require('neoscroll').setup({
-                -- All these keys will be mapped to their corresponding default scrolling animation
-                mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
-                    '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
-                hide_cursor = true, -- Hide cursor while scrolling
-                stop_eof = true, -- Stop at <EOF> when scrolling downwards
-                use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-                respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-                cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
+                mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+                hide_cursor = true,
+                stop_eof = true,
+                use_local_scrolloff = false,
+                respect_scrolloff = false,
+                cursor_scrolls_alone = true,
+                easing_function = nil,
+                pre_hook = nil,
+                post_hook = nil,
             })
         end
-    },
-    {
-        "ethanholz/nvim-lastplace",
-        event = "BufRead",
-        config = function()
-            require("nvim-lastplace").setup({
-                lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-                lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit", },
-                lastplace_open_folds = true,
-            })
-        end,
-    },
-    {
-        "ahmedkhalf/lsp-rooter.nvim",
-        event = "BufRead",
-        config = function() require("lsp-rooter").setup() end,
-    },
-    { "folke/trouble.nvim", cmd = "TroubleToggle" },
-    { "tpope/vim-repeat" },
-    {
-        "kylechui/nvim-surround",
-        config = function()
-            require("nvim-surround").setup {
-                keymaps = {
-                    insert = "<C-g>s",
-                    insert_line = "<C-g>S",
-                    normal = "ys",
-                    normal_cur = "yss",
-                    normal_line = "yS",
-                    normal_cur_line = "ySS",
-                    visual = "S",
-                    visual_line = "gS",
-                    delete = "ds",
-                    change = "cs",
-                },
-            }
-        end,
     },
     {
         "folke/persistence.nvim",
@@ -307,50 +264,63 @@ lvim.plugins = {
         end,
     },
     {
+        "ethanholz/nvim-lastplace",
+        event = "BufRead",
+        config = function()
+            require("nvim-lastplace").setup({
+                lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+                lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit", },
+                lastplace_open_folds = true,
+            })
+        end,
+    },
+    {
+        "ray-x/lsp_signature.nvim",
+        event = "BufRead",
+        config = function()
+            require "lsp_signature".on_attach({
+                bind = true,
+                handler_opts = { border = "rounded" }
+            })
+        end,
+    },
+    {
+        "ahmedkhalf/lsp-rooter.nvim",
+        event = "BufRead",
+        config = function() require("lsp-rooter").setup() end,
+    },
+    {
+        "kylechui/nvim-surround",
+        config = function() require("nvim-surround").setup {} end,
+    },
+    {
         "LhKipp/nvim-nu",
         config = function() require("nu").setup {} end,
     },
-    { "hrsh7th/cmp-emoji" },
-    { "felipec/vim-sanegx", event = "BufRead" },
+    { "folke/trouble.nvim",  cmd = "TroubleToggle" },
+    { "tpope/vim-repeat" },
+    { "felipec/vim-sanegx",  event = "BufRead" },
 }
-
--- Onedark theming
-require('onedark').setup {
-    style = 'deep',
-    transparent = true,
-    colors = {
-        fg = '#ededed',
-    },
-}
-require('onedark').load()
 
 -- Telescope settings
 lvim.builtin.telescope.on_config_done = function(telescope)
     pcall(telescope.load_extension, "fzf")
     pcall(telescope.load_extension, "projects")
     pcall(telescope.load_extension, "notify")
-    -- any other extensions loading
 end
 
 --- Key Mappings ---
 
+-- General
 lvim.leader = "space"
 lvim.keys.normal_mode["<Space>v"] = ":vsplit<cr>"
 lvim.keys.normal_mode["<Space>s"] = ":split<cr>"
-lvim.keys.normal_mode["<C-w>"] = "<C-w>w"
 
--- spectre plugin
-lvim.keys.normal_mode["<Space>S"] = "<cmd>lua require('spectre').open()<cr>"
-lvim.keys.normal_mode["<Space>Sf"] = "viw:lua require('spectre').open_file_search()<cr>"
-lvim.keys.normal_mode["<Space>Sw"] = "<cmd>lua require('spectre').open_visual({select_word=true})<cr>"
-lvim.keys.normal_mode["<Space>Swf"] = "<cmd>lua require('spectre').open({path = vim.fn.fnameescape(vim.fn.expand('%:p:.')), search_text = vim.fn.expand('<cword>')})<cr>"
+-- Spectre plugin
+lvim.keys.normal_mode["<Space>Sp"] = "<cmd>lua require('spectre').open_visual({select_word=true})<cr>"
 
 -- Vim-notify plugin
 lvim.keys.normal_mode["<Space>n"] = "<cmd>lua require('notify').dismiss()<cr>"
-
--- toggleterm plugin
-lvim.builtin.terminal.open_mapping = "<C-t>"
-lvim.builtin.terminal.direction = "horizontal"
 
 -- Trouble plugin
 lvim.builtin.which_key.mappings["t"] = {
@@ -378,9 +348,6 @@ lvim.builtin.which_key.mappings["sn"] = {
 lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"
 table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
 
-lvim.builtin.cmp.formatting.source_names["emoji"] = "(Emoji)"
-table.insert(lvim.builtin.cmp.sources, { name = "emoji" })
-
 --- Specific Linting/Formatting parameters ---
 -- Formatter options
 local formatters = require "lvim.lsp.null-ls.formatters"
@@ -398,4 +365,6 @@ linters.setup {
 -- LSP options
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.offsetEncoding = { "utf-16" }
-require("lspconfig").clangd.setup({ capabilities = capabilities })
+require("lvim.lsp.manager").setup("clangd", { capabilities = capabilities })
+
+require("lvim.lsp.manager").setup("rnix", { cmd = { "rnix-lsp" } })

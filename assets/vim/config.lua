@@ -71,7 +71,7 @@ vim.g.loaded_perl_provider = 0
 lvim.builtin.alpha.dashboard.section.buttons.entries[6] = {
     "c",
     lvim.icons.ui.Gear .. "  Configuration",
-    "<CMD>edit /home/leiyks/git/nixos-config/assets/vim/config.lua <CR>"
+    "<CMD>edit /home/leiyks/git/nixos-config/assets/vim/config.lua<CR>"
 }
 
 -- Dashboard configuration
@@ -79,13 +79,11 @@ lvim.builtin.alpha.dashboard.section.buttons.entries[6] = {
 lvim.builtin.alpha.dashboard.section.buttons.entries[7] = {
     "x",
     "  Nixos Configuration",
-    "<CMD>edit /home/leiyks/git/nixos-config/flake.nix <CR>"
+    "<CMD>edit /home/leiyks/git/nixos-config/flake.nix<CR>"
 }
 
 lvim.builtin.terminal.active = true
 lvim.builtin.terminal.insert_mappings = false
-lvim.builtin.terminal.open_mapping = "<C-t>"
-lvim.builtin.terminal.direction = "horizontal"
 
 lvim.builtin.cmp.cmdline.enable = true
 

@@ -3,7 +3,6 @@
 lvim.log.level = "warn"
 lvim.colorscheme = "onedark"
 lvim.format_on_save.enabled = true
-lvim.lsp.automatic_servers_installation = true
 lvim.transparent_window = true
 
 -- Status bar configuration
@@ -124,6 +123,10 @@ lvim.plugins = {
 
     -- Navigation
     { "ggandor/lightspeed.nvim", event = "BufRead", },
+    {
+        "chentoast/marks.nvim",
+        config = function() require("marks").setup {} end,
+    },
 
     -- Editing
     { "mg979/vim-visual-multi" },
@@ -241,19 +244,7 @@ lvim.plugins = {
     {
         "karb94/neoscroll.nvim",
         event = "WinScrolled",
-        config = function()
-            require('neoscroll').setup({
-                mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
-                hide_cursor = true,
-                stop_eof = true,
-                use_local_scrolloff = false,
-                respect_scrolloff = false,
-                cursor_scrolls_alone = true,
-                easing_function = nil,
-                pre_hook = nil,
-                post_hook = nil,
-            })
-        end
+        config = function() require('neoscroll').setup() end
     },
     {
         "folke/persistence.nvim",
@@ -311,28 +302,28 @@ end
 
 -- General
 lvim.leader = "space"
-lvim.keys.normal_mode["<Space>v"] = ":vsplit<cr>"
-lvim.keys.normal_mode["<Space>sl"] = ":split<cr>"
 
 lvim.keys.normal_mode["<M-Up>"] = "<C-w>k"
 lvim.keys.normal_mode["<M-Down>"] = "<C-w>j"
 lvim.keys.normal_mode["<M-Right>"] = "<C-w>l"
 lvim.keys.normal_mode["<M-Left>"] = "<C-w>h"
--- Spectre plugin
-lvim.keys.normal_mode["<Space>Sp"] = "<cmd>lua require('spectre').open_visual({select_word=true})<cr>"
 
--- Vim-notify plugin
-lvim.keys.normal_mode["<Space>n"] = "<cmd>lua require('notify').dismiss()<cr>"
+lvim.builtin.which_key.mappings["v"] = { ":vsplit<cr>", "Vertical split" }
+lvim.builtin.which_key.mappings["j"] = { ":split<cr>", "Horizontal split" }
+lvim.builtin.which_key.mappings["sm"] = { "<cmd>lua require('telescope.builtin').marks()<cr>", "Marks" }
+
+-- Spectre plugin
+lvim.builtin.which_key.mappings["r"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Spectre" }
 
 -- Trouble plugin
 lvim.builtin.which_key.mappings["t"] = {
     name = "Diagnostics",
-    t = { "<cmd>TroubleToggle<cr>", "trouble" },
-    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
-    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
-    q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-    l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-    r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+    t = { "<cmd>TroubleToggle<cr>", "Toggle trouble window" },
+    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
+    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document" },
+    q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix" },
+    l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
+    r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
 }
 
 -- Persistance plugin
@@ -343,10 +334,11 @@ lvim.builtin.which_key.mappings["S"] = {
     Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
 
-lvim.builtin.which_key.mappings["sn"] = {
-    "<cmd>lua require'telescope'.extensions.notify.notify{}<CR>", "Notifications"
-}
+-- Vim-notify plugin
+lvim.builtin.which_key.mappings["sn"] = { "<cmd>lua require'telescope'.extensions.notify.notify{}<cr>", "Notifications" }
+lvim.builtin.which_key.mappings["n"] = { "<cmd>lua require('notify').dismiss()<cr>", "Dismiss notifications" }
 
+-- Copilot plugin
 lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"
 table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
 
@@ -365,8 +357,15 @@ linters.setup {
 }
 
 -- LSP options
+
+lvim.lsp.automatic_servers_installation = true
+
+-- Disable rnix/nil because rnix-lsp is installed with nix config
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "nil_ls", "rnix" })
+vim.list_extend(lvim.lsp.installer.setup.automatic_installation.exclude, { "rnix" })
+
+require("lvim.lsp.manager").setup("rnix", { cmd = { "rnix-lsp" } })
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.offsetEncoding = { "utf-16" }
 require("lvim.lsp.manager").setup("clangd", { capabilities = capabilities })
-
-require("lvim.lsp.manager").setup("rnix", { cmd = { "rnix-lsp" } })

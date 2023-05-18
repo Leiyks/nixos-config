@@ -11,8 +11,7 @@
     ];
 
     sessionVariables = {
-      OPENAI_API_KEY =
-        "${builtins.readFile ~/.chatgpt_token}";
+      OPENAI_API_KEY = "${builtins.readFile ~/.chatgpt_token}";
     };
 
     file.".config/wallpaper.jpg".source = ../../assets/themes/laptop_wallpaper.jpg;

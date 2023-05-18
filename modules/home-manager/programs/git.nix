@@ -5,7 +5,12 @@
     enable = true;
 
     userName = "Alexandre Rulleau";
-    userEmail = "alexandre.rulleau@epita.fr";
+    userEmail = "rulleaualexandre@gmail.com";
+
+    signing = {
+      key = "7FDEC26163735BB1";
+      signByDefault = true;
+    };
 
     difftastic = {
       enable = true;
@@ -46,11 +51,8 @@
         autoSquash = true;
       };
 
-      merge.tool = "fugitive";
-      mergetool."fugitive" = ''vim -f -c '"set nocursorline"' -c '":set wrap"' -c "Gvdiffsplit!" "$MERGED"'';
-
       core = {
-        editor = "vim";
+        editor = "lvim";
         autocrlf = "input";
         pager = "LESS=FRX less";
       };

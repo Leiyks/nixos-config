@@ -45,8 +45,6 @@
       # Json
       jq
 
-      # Nix
-
       # NodeJs
       nodejs
       nodePackages.pnpm

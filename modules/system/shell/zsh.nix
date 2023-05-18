@@ -35,7 +35,6 @@
         "git"
         "history"
         "sudo"
-        "ssh-agent"
         "last-working-dir"
         "zoxide"
         "colored-man-pages"

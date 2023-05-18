@@ -8,7 +8,7 @@
     userEmail = "rulleaualexandre@gmail.com";
 
     signing = {
-      key = "7FDEC26163735BB1";
+      key = "D335AA7B586CA031";
       signByDefault = true;
     };
 

@@ -21,6 +21,11 @@
 
       timeout = 15;
     };
+
+    extraModprobeConfig = ''
+      options snd-hda-intel patch=hda-jack-retask.fw
+    '';
+
   };
 
   services = {
@@ -37,12 +42,22 @@
     127.0.0.1 minio
   '';
 
-  hardware.nvidia = {
-    prime = {
-      sync.enable = true;
-      nvidiaBusId = "PCI:1:0:0";
-      intelBusId = "PCI:0:2:0";
+  hardware = {
+    nvidia = {
+      prime = {
+        sync.enable = true;
+        nvidiaBusId = "PCI:1:0:0";
+        intelBusId = "PCI:0:2:0";
+      };
+      modesetting.enable = true;
     };
-    modesetting.enable = true;
+
+    # Fix of the bad sound quality.
+    # WARNING: The '/lib/firmware' folder must be created.
+    firmware = [
+      (pkgs.runCommand "jack-retask" { } ''
+        install -D ${../../assets/misc/hda-jack-retask.fw} $out/lib/firmware/hda-jack-retask.fw
+      '')
+    ];
   };
 }

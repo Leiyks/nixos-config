@@ -68,6 +68,8 @@
       ### System ###
       refind
       efibootmgr
+      alsaTools
+      psmisc
     ];
 
     stateVersion = "22.11";

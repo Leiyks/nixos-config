@@ -116,7 +116,7 @@ table.insert(lvim.builtin.nvimtree.setup.filters.custom, "__pycache__$")
 ------------------------- Treesitter configuration ----------------------------
 
 lvim.builtin.treesitter.ensure_installed = "all"
-lvim.builtin.treesitter.ignore_install = { "" }
+lvim.builtin.treesitter.ignore_install = { "lua" }
 lvim.builtin.treesitter.highlight.enable = true
 lvim.builtin.treesitter.matchup.enable = true
 
@@ -256,17 +256,6 @@ lvim.plugins = {
         end,
     },
     {
-        "ethanholz/nvim-lastplace",
-        event = "BufRead",
-        config = function()
-            require("nvim-lastplace").setup({
-                lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-                lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit", },
-                lastplace_open_folds = true,
-            })
-        end,
-    },
-    {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
         config = function()
@@ -277,16 +266,12 @@ lvim.plugins = {
         end,
     },
     {
-        "ahmedkhalf/lsp-rooter.nvim",
-        event = "BufRead",
-        config = function() require("lsp-rooter").setup() end,
-    },
-    {
         "LhKipp/nvim-nu",
         config = function() require("nu").setup {} end,
     },
-    { "folke/trouble.nvim", cmd = "TroubleToggle" },
-    { "felipec/vim-sanegx", event = "BufRead" },
+    { "farmergreg/vim-lastplace" },
+    { "folke/trouble.nvim",      cmd = "TroubleToggle" },
+    { "felipec/vim-sanegx",      event = "BufRead" },
 }
 
 -------------------------------------------------------------------------------

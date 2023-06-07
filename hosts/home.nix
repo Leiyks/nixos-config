@@ -21,6 +21,7 @@
       neofetch
       nushell
       wget
+      pre-commit
 
       ### Video/Audio ###
       feh
@@ -40,7 +41,14 @@
       ### Languages ###
       # Python
       poetry
-      (python3.withPackages (p: [ p.pip p.black p.pytest ]))
+      (python3.withPackages (p: [
+        p.pip
+        p.black
+        p.pytest
+        p.mypy
+        p.isort
+      ]))
+      pyright
 
       # Json
       jq

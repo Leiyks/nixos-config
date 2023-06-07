@@ -133,7 +133,6 @@ lvim.builtin.telescope.theme = "center"
 -------------------------------------------------------------------------------
 
 lvim.plugins = {
-
     --------------------------------- Theming ---------------------------------
 
     {
@@ -338,15 +337,4 @@ linters.setup {
 
 ----------------------------- LSP options -------------------------------------
 
-lvim.lsp.installer.setup.automatic_installation = { exclude = {} }
-
--- Disable nil_ls
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "nil_ls" })
-
--- Use rnix instead
-lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
-    return server ~= "rnix"
-end, lvim.lsp.automatic_configuration.skipped_servers)
-
--- lua LSP needs manual setup
-require("lvim.lsp.manager").setup("lua_ls", {})
+lvim.lsp.automatic_servers_installation = false

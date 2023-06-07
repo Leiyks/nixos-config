@@ -337,4 +337,4 @@ linters.setup {
 
 ----------------------------- LSP options -------------------------------------
 
-lvim.lsp.automatic_servers_installation = false
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pylyzer", "azure-pipeline-ls" })

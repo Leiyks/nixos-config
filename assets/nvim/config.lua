@@ -165,17 +165,6 @@ lvim.plugins = {
             require('onedark').load()
         end,
     },
-    {
-        "catppuccin/nvim",
-        config = function()
-            require("nvim-treesitter.configs").setup {
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false
-                },
-            }
-        end
-    },
 
     ------------------------------- Navigation --------------------------------
 
@@ -183,6 +172,23 @@ lvim.plugins = {
     {
         "chentoast/marks.nvim",
         config = function() require("marks").setup {} end,
+    },
+    {
+        'alexghergh/nvim-tmux-navigation',
+        config = function()
+            local nvim_tmux_nav = require('nvim-tmux-navigation')
+
+            nvim_tmux_nav.setup {
+                disable_when_zoomed = true
+            }
+
+            vim.keymap.set('n', "<M-Left>", nvim_tmux_nav.NvimTmuxNavigateLeft)
+            vim.keymap.set('n', "<M-Down>", nvim_tmux_nav.NvimTmuxNavigateDown)
+            vim.keymap.set('n', "<M-Up>", nvim_tmux_nav.NvimTmuxNavigateUp)
+            vim.keymap.set('n', "<M-Right>", nvim_tmux_nav.NvimTmuxNavigateRight)
+            vim.keymap.set('n', "<M-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
+            vim.keymap.set('n', "<M-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
+        end
     },
 
     --------------------------------- Editing ---------------------------------
@@ -301,10 +307,10 @@ lvim.plugins = {
 
 lvim.leader = "space"
 
-lvim.keys.normal_mode["<M-Up>"] = "<C-w>k"
-lvim.keys.normal_mode["<M-Down>"] = "<C-w>j"
-lvim.keys.normal_mode["<M-Right>"] = "<C-w>l"
-lvim.keys.normal_mode["<M-Left>"] = "<C-w>h"
+-- lvim.keys.normal_mode["<M-Up>"] = "<C-w>k"
+-- lvim.keys.normal_mode["<M-Down>"] = "<C-w>j"
+-- lvim.keys.normal_mode["<M-Right>"] = "<C-w>l"
+-- lvim.keys.normal_mode["<M-Left>"] = "<C-w>h"
 
 lvim.builtin.which_key.mappings["v"] = { ":vsplit<cr>", "Vertical split" }
 lvim.builtin.which_key.mappings["j"] = { ":split<cr>", "Horizontal split" }

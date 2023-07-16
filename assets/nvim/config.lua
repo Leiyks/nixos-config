@@ -71,10 +71,22 @@ lvim.builtin.terminal.insert_mappings = false
 -- Enable cmp in cmdline
 lvim.builtin.cmp.cmdline.enable = true
 
+-- TODO: fix when icons are not bugged anymore
+-- Fix icons
+lvim.builtin.gitsigns.opts.signs.delete.text = "▎"
+lvim.builtin.gitsigns.opts.signs.topdelete.text = "▎"
+
+lvim.builtin.alpha.dashboard.section.buttons.entries[1][2] = "  Find File"
+lvim.builtin.alpha.dashboard.section.buttons.entries[5][2] = "󰊄  Find Text"
+
+lvim.builtin.nvimtree.setup.renderer.icons.glyphs.folder.default = ""
+
+lvim.builtin.bufferline.options.buffer_close_icon = "󱎘"
+
 -------------------------- Status bar configuration ---------------------------
 
 local components = require "lvim.core.lualine.components"
--- TODO: reanable tokynight when the plugin is updated
+-- TODO: reanable tokyonight when the plugin is updated
 lvim.builtin.lualine.options.theme = "auto"
 lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.component_separators = ""
@@ -109,6 +121,8 @@ lvim.builtin.nvimtree.setup.view.adaptive_size = true
 lvim.builtin.nvimtree.setup.auto_reload_on_write = true
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
+
+-- Filter useless folder from display
 table.insert(lvim.builtin.nvimtree.setup.filters.custom, "^.git$")
 table.insert(lvim.builtin.nvimtree.setup.filters.custom, "cache$")
 table.insert(lvim.builtin.nvimtree.setup.filters.custom, "__pycache__$")
@@ -151,6 +165,17 @@ lvim.plugins = {
             require('onedark').load()
         end,
     },
+    {
+        "catppuccin/nvim",
+        config = function()
+            require("nvim-treesitter.configs").setup {
+                highlight = {
+                    enable = true,
+                    additional_vim_regex_highlighting = false
+                },
+            }
+        end
+    },
 
     ------------------------------- Navigation --------------------------------
 
@@ -163,13 +188,6 @@ lvim.plugins = {
     --------------------------------- Editing ---------------------------------
 
     { "mg979/vim-visual-multi" },
-    {
-        "andymass/vim-matchup",
-        event = "CursorMoved",
-        config = function()
-            vim.g.matchup_matchparen_offscreen = { method = "popup" }
-        end,
-    },
     {
         "windwp/nvim-spectre",
         event = "BufRead",
@@ -230,6 +248,7 @@ lvim.plugins = {
     },
     {
         "j-hui/fidget.nvim",
+        branch = "legacy",
         config = function()
             require('fidget').setup {
                 window = { blend = 0, },

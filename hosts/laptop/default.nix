@@ -5,8 +5,7 @@
     [ /etc/nixos/hardware-configuration.nix ] ++
     (import ../../modules/system/virtualization) ++
     (import ../../modules/system/i3-plasma) ++
-    (import ../../modules/system/hardware) ++
-    (import ../../modules/system/krb5);
+    (import ../../modules/system/hardware);
 
   boot = {
     kernelPackages = pkgs.linuxPackages_6_1;
@@ -30,7 +29,10 @@
 
   services = {
     blueman.enable = true;
-    asusd.enable = true;
+    asusd = {
+      enable = true;
+      enableUserService = true;
+    };
     xserver = {
       videoDrivers = [ "nvidia" ];
     };

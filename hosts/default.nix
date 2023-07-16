@@ -7,6 +7,11 @@ let
     inherit system;
     config.allowUnfree = true;
   };
+
+  pkgs-stable = import inputs.nixpkgs-stable {
+    inherit system;
+    config.allowUnfree = true;
+  };
 in
 {
   laptop =
@@ -18,7 +23,7 @@ in
       };
     in
     (if systemConfiguration == true then
-      inputs.nixpkgs.lib.nixosSystem
+      inputs.nixpkgs-stable.lib.nixosSystem
         {
           inherit system;
 
@@ -30,7 +35,7 @@ in
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        extraSpecialArgs = { inherit user host; };
+        extraSpecialArgs = { inherit user host pkgs-stable; };
 
         modules = [ ./home.nix ./laptop/home.nix ];
       });

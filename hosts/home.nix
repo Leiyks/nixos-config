@@ -3,7 +3,6 @@
 {
   imports =
     (import ../modules/home-manager/editors) ++
-    (import ../modules/home-manager/services) ++
     (import ../modules/home-manager/programs);
 
   home = {
@@ -15,24 +14,13 @@
       htop
       ranger
       tldr
-      exa
+      eza
       bat
       zoxide
       neofetch
       nushell
       wget
       pre-commit
-
-      ### Video/Audio ###
-      feh
-      vlc
-
-      ### Apps ###
-      brave
-      firefox
-      slack
-      discord
-      arandr
 
       ### File Management ###
       unzip
@@ -68,19 +56,9 @@
       # Java
       openjdk17
       maven
-
-      ### Editors ###
-      jetbrains.idea-ultimate
-      vscode
-
-      ### System ###
-      refind
-      efibootmgr
-      alsaTools
-      psmisc
     ];
 
-    stateVersion = "22.11";
+    stateVersion = "23.05";
   };
 
   programs = {

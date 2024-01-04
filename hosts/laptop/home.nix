@@ -1,13 +1,35 @@
 { pkgs, ... }:
 
 {
-  imports = (import ../../modules/home-manager/i3-plasma);
+  imports = (import ../modules/home-manager/services) ++
+    (import ../../modules/home-manager/i3-plasma);
 
   # Specific packages for laptop
   home = {
     packages = with pkgs; [
       glib.out
       zlib
+
+      ### Video/Audio ###
+      feh
+      vlc
+
+      ### Apps ###
+      brave
+      firefox
+      slack
+      discord
+      arandr
+
+      ### Editors ###
+      jetbrains.idea-ultimate
+      vscode
+
+      ### System ###
+      refind
+      efibootmgr
+      alsaTools
+      psmisc
     ];
 
     sessionVariables = {

@@ -39,4 +39,18 @@ in
 
         modules = [ ./home.nix ./laptop/home.nix ];
       });
+
+  wsl =
+    let
+      host.hostName = "leiyks-wsl";
+    in
+    (if systemConfiguration == false then
+      inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        extraSpecialArgs = { inherit user host pkgs; };
+
+        modules = [ ./home.nix ./wsl/home.nix ];
+      }
+    else { });
 }

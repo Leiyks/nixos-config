@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
 
@@ -18,7 +18,7 @@
       tmuxPlugins.tmux-fzf
       {
         plugin = tmuxPlugins.power-theme;
-        extraConfig = "set -g @tmux_power_theme 'violet'";
+        extraConfig = "set -g @tmux_power_theme 'moon'";
       }
     ];
   };

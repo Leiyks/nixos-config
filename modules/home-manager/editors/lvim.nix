@@ -112,10 +112,10 @@ in
   home.sessionVariables = env;
 
   home.file.".config/lvim/config.lua" = {
-    source = ../../../assets/nvim/config.lua;
+    source = ../../../assets/lvim/config.lua;
   };
 
   home.file.".config/lvim/after" = {
-    source = ../../../assets/nvim/after;
+    source = ../../../assets/lvim/after;
   };
 }

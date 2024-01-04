@@ -1,1 +1,1 @@
-require("lvim.lsp.manager").setup("rnix", {})
+require("lvim.lsp.manager").setup("nil_ls", {})

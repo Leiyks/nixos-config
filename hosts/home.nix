@@ -21,10 +21,12 @@
       nushell
       wget
       pre-commit
+      sesh
 
       ### File Management ###
       unzip
       unrar
+      fd
 
       ### Languages ###
       # Python

@@ -71,25 +71,13 @@ lvim.builtin.terminal.insert_mappings = false
 -- Enable cmp in cmdline
 lvim.builtin.cmp.cmdline.enable = true
 
--- TODO: fix when icons are not bugged anymore
--- Fix icons
-lvim.builtin.gitsigns.opts.signs.delete.text = "▎"
-lvim.builtin.gitsigns.opts.signs.topdelete.text = "▎"
-
-lvim.builtin.alpha.dashboard.section.buttons.entries[1][2] = "  Find File"
-lvim.builtin.alpha.dashboard.section.buttons.entries[5][2] = "󰊄  Find Text"
-
-lvim.builtin.nvimtree.setup.renderer.icons.glyphs.folder.default = ""
-
-lvim.builtin.bufferline.options.buffer_close_icon = "󱎘"
-
 -------------------------- Status bar configuration ---------------------------
 
 local components = require "lvim.core.lualine.components"
--- TODO: reanable tokyonight when the plugin is updated
-lvim.builtin.lualine.options.theme = "auto"
+lvim.builtin.lualine.options.theme = "tokyonight"
 lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.component_separators = ""
+lvim.builtin.lualine.options.section_separators = { right = "", left = "" }
 lvim.builtin.lualine.sections = {
     lualine_a = { 'mode' },
     lualine_b = { components.branch, components.diff },
@@ -154,6 +142,7 @@ lvim.plugins = {
         config = function()
             require('onedark').setup {
                 style = 'deep',
+                transparent = true,
                 colors = {
                     fg = '#ededed',
                     dark_bg = '#16161e',
@@ -165,10 +154,21 @@ lvim.plugins = {
             require('onedark').load()
         end,
     },
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
+    },
 
     ------------------------------- Navigation --------------------------------
 
-    { "ggandor/lightspeed.nvim", event = "BufRead", },
+    {
+        "ggandor/leap.nvim",
+        config = function()
+            require('leap').create_default_mappings()
+        end
+    },
     {
         "chentoast/marks.nvim",
         config = function() require("marks").setup {} end,
@@ -223,12 +223,6 @@ lvim.plugins = {
             lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"
             table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
         end,
-    },
-    {
-        "tzachar/cmp-tabnine",
-        build = "./install.sh",
-        dependencies = "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
     },
 
     ----------------------------------- UI ------------------------------------
@@ -307,10 +301,10 @@ lvim.plugins = {
 
 lvim.leader = "space"
 
--- lvim.keys.normal_mode["<M-Up>"] = "<C-w>k"
--- lvim.keys.normal_mode["<M-Down>"] = "<C-w>j"
--- lvim.keys.normal_mode["<M-Right>"] = "<C-w>l"
--- lvim.keys.normal_mode["<M-Left>"] = "<C-w>h"
+lvim.keys.normal_mode["<C-Down>"] = ":horizontal resize +2<CR>"
+lvim.keys.normal_mode["<C-Left>"] = ":vertical resize -2<CR>"
+lvim.keys.normal_mode["<C-Right>"] = ":vertical resize +2<CR>"
+lvim.keys.normal_mode["<C-Up>"] = ":horizontal resize -2<CR>"
 
 lvim.builtin.which_key.mappings["v"] = { ":vsplit<cr>", "Vertical split" }
 lvim.builtin.which_key.mappings["j"] = { ":split<cr>", "Horizontal split" }
@@ -350,6 +344,7 @@ lvim.builtin.which_key.mappings["S"] = {
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
     { command = "black", args = { "--line-length=120" }, },
+    { command = "isort", args = { "--line-length=120", "--profile=black", "--filter-files" }, },
     { command = "jq" },
 }
 
@@ -357,7 +352,8 @@ formatters.setup {
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-    { command = "mypy", args = { "--check-untyped-defs" }, },
+    { command = "mypy",    args = { "--check-untyped-defs" }, },
+    { command = "yamllint" },
 }
 
 ----------------------------- LSP options -------------------------------------

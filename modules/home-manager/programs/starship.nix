@@ -57,14 +57,10 @@
       java.symbol = " ";
       julia.symbol = " ";
       lua.symbol = " ";
-      memory_usage.symbol = " ";
       meson.symbol = "喝 ";
-      nim.symbol = " ";
       nix_shell.symbol = " ";
       nodejs.symbol = " ";
-      package.symbol = " ";
       python.symbol = " ";
-      rlang.symbol = "ﳒ ";
       ruby.symbol = " ";
       rust.symbol = " ";
       scala.symbol = " ";

@@ -36,7 +36,7 @@ let
     fd
 
     # Mason dependencies
-    julia
+    # julia
     php
     php.packages.composer
     powershell

@@ -12,7 +12,7 @@
 
     initExtra = ''
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-      if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+      if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [ -z "$NOTMUX" ]; then
         tmux attach -t default 2>/dev/null || tmux new -s default
       fi
     '';
@@ -29,15 +29,14 @@
       "gcns!" = "git commit -v -s -S --no-edit --amend";
       "vim" = "lvim";
       "vi" = "lvim";
-      "exa" = "eza";
-      "ls"="eza $eza_params";
-      "l" = "eza --git-ignore $eza_params";
-      "ll" = "eza --all --header --long $eza_params";
-      "llm" = "eza --all --header --long --sort=modified $eza_params";
+      "ls"="eza --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+      "l" = "eza --git-ignore --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+      "ll" = "eza --all --header --long --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+      "llm" = "eza --all --header --long --sort=modified --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
       "la" = "eza -lbhHigUmuSa";
       "lx" = "eza -lbhHigUmuSa@";
-      "lt" = "eza --tree $eza_params";
-      "tree" = "eza --tree $eza_param";
+      "lt" = "eza --tree --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+      "tree" = "eza --tree --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
     };
 
     oh-my-zsh = {
@@ -49,6 +48,7 @@
         "last-working-dir"
         "zoxide"
         "colored-man-pages"
+        "kubectl"
       ];
       theme = "robbyrussell";
     };
@@ -60,7 +60,9 @@
         { name = "djui/alias-tips"; }
         { name = "hlissner/zsh-autopair"; }
         { name = "chisui/zsh-nix-shell"; }
+        { name = "unixorn/docker-helpers.zshplugin"; }
         { name = "zsh-users/zsh-autosuggestions"; }
+        { name = "se-jaeger/zsh-activate-py-environment"; }
       ];
     };
   };

@@ -352,7 +352,7 @@ formatters.setup {
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-    { command = "mypy",    args = { "--check-untyped-defs" }, },
+    { command = "mypy",    args = { "--check-untyped-defs", "--ignore-missing-imports" }, },
     { command = "yamllint" },
 }
 

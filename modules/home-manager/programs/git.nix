@@ -52,7 +52,6 @@
       };
 
       core = {
-        editor = "lvim";
         autocrlf = "input";
         pager = "LESS=FRX less";
       };

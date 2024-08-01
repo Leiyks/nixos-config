@@ -60,10 +60,6 @@
   environment = {
     localBinInPath = true;
     systemPackages = [ pkgs.man-pages pkgs.man-pages-posix ];
-    variables = {
-      EDITOR = "lvim";
-      VISUAL = "lvim";
-    };
   };
 
   sound.mediaKeys.enable = true;

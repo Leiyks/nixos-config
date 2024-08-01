@@ -27,8 +27,6 @@
       "cat" = "bat";
       "gcans!" = "git commit -v -a -s -S --no-edit --amend";
       "gcns!" = "git commit -v -s -S --no-edit --amend";
-      "vim" = "lvim";
-      "vi" = "lvim";
       "ls"="eza --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
       "l" = "eza --git-ignore --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
       "ll" = "eza --all --header --long --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";

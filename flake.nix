@@ -2,7 +2,7 @@
   description = "My Personal NixOS Flake Configuration";
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/release-23.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/release-24.05";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 

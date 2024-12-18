@@ -2,6 +2,7 @@
 
 {
   programs.command-not-found.enable = false;
+  # programs.atuin.enable = true;
   programs.zsh = {
     enable = true;
 
@@ -27,21 +28,20 @@
       "cat" = "bat";
       "gcans!" = "git commit -v -a -s -S --no-edit --amend";
       "gcns!" = "git commit -v -s -S --no-edit --amend";
-      "ls"="eza --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
-      "l" = "eza --git-ignore --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
-      "ll" = "eza --all --header --long --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
-      "llm" = "eza --all --header --long --sort=modified --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+      "ls"="eza --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale all";
+      "l" = "eza --git-ignore --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale all";
+      "ll" = "eza --all --header --long --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale all";
+      "llm" = "eza --all --header --long --sort=modified --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale all";
       "la" = "eza -lbhHigUmuSa";
       "lx" = "eza -lbhHigUmuSa@";
-      "lt" = "eza --tree --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
-      "tree" = "eza --tree --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale";
+      "lt" = "eza --tree --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale all";
+      "tree" = "eza --tree --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale all";
     };
 
     oh-my-zsh = {
       enable = true;
       plugins = [
         "git"
-        "history"
         "sudo"
         "last-working-dir"
         "zoxide"
@@ -54,7 +54,6 @@
     zplug = {
       enable = true;
       plugins = [
-        { name = "joshskidmore/zsh-fzf-history-search"; }
         { name = "djui/alias-tips"; }
         { name = "hlissner/zsh-autopair"; }
         { name = "chisui/zsh-nix-shell"; }

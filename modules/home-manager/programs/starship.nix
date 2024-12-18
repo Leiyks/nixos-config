@@ -4,11 +4,12 @@
 
     settings = {
       format =
-        "$username$hostname$localip$shlvl$singularity$kubernetes$directory$vcsh$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$docker_context$package$c$cmake$cobol$daml$dart$deno$dotnet$elixir$elm$erlang$golang$guix_shell$haskell$haxe$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$opa$perl$php$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$fill$battery$cmd_duration$time$memory_usage$line_break$jobs$status$os$container$shell$character";
+        "$username$hostname$localip$shlvl$singularity$kubernetes$directory$vcsh$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$docker_context$package$c$cmake$cobol$daml$dart$deno$dotnet$elixir$elm$erlang$golang$guix_shell$haskell$haxe$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$opa$perl$php$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$buf$nix_shell$conda$meson$spack$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$battery$cmd_duration$time$memory_usage$line_break$jobs$status$os$container$shell$character";
 
       cmd_duration = {
         format = "took [$duration 󱦟]($style) ";
       };
+
       fill = {
         symbol = " ";
         style = "";
@@ -37,7 +38,7 @@
 
       time = {
         disabled = false;
-        format = "at [$time 🕙]($style)";
+        format = "at [$time 🕙]($style) ";
       };
 
       # Nerdfont

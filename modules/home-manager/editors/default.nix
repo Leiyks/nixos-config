@@ -1,4 +1,4 @@
 [
   ./lazyvim.nix
-  ./lvim.nix
+  #./lvim.nix
 ]

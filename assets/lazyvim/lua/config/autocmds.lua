@@ -1,3 +1,11 @@
+-- listen lsp-progress event and refresh lualine
+vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+  group = "lualine_augroup",
+  pattern = "LspProgressStatusUpdated",
+  callback = require("lualine").refresh,
+})
+
 local tokyonight_colors = require("tokyonight.colors").setup()
 
 -- Make Floating popup nice and transparent.

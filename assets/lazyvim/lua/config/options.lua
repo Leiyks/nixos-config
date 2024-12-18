@@ -16,9 +16,9 @@ vim.opt.backup = true
 vim.opt.undofile = true
 vim.opt.swapfile = true
 
-vim.opt.backupdir = "/home/leiyks/.config/lvim/tmp/backup"
-vim.opt.undodir = "/home/leiyks/.config/lvim/tmp/undo"
-vim.opt.directory = "/home/leiyks/.config/lvim/tmp/swap"
+vim.opt.backupdir = "/Users/alexandre.rulleau/.config/lvim/tmp/backup"
+vim.opt.undodir = "/Users/alexandre.rulleau/.config/lvim/tmp/undo"
+vim.opt.directory = "/Users/alexandre.rulleau/.config/lvim/tmp/swap"
 
 -- Misc
 vim.opt.smartcase = true
@@ -50,3 +50,5 @@ vim.opt.winblend = 0
 vim.diagnostic.config({
   float = { border = "rounded" },
 })
+
+vim.opt.relativenumber = false

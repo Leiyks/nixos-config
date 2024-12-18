@@ -114,4 +114,27 @@ return {
       require("marks").setup({})
     end,
   },
+
+  {
+    "mistweaverco/kulala.nvim",
+    opts = {
+      additional_curl_options = { "-L" },
+    },
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      inlay_hints = { enabled = false },
+    },
+  },
+
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        ["json"] = { "jq" },
+      },
+    },
+  },
 }

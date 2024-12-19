@@ -38,10 +38,6 @@ return {
   },
 
   -- Add lualine component for LSP
-  -- {
-  --   "arkav/lualine-lsp-progress",
-  -- },
-  -- lua
   {
     "linrongbin16/lsp-progress.nvim",
     config = function()
@@ -111,24 +107,6 @@ return {
             LazyVim.lualine.root_dir(),
           },
           lualine_c = {
-            -- {
-            --   "lsp_progress",
-            --   display_components = { "lsp_client_name", "spinner", { "title", "percentage", "message" } },
-            --   separators = {
-            --     component = ", ",
-            --     progress = " | ",
-            --     message = { pre = "(", post = ")" },
-            --     percentage = { pre = "", post = "%% " },
-            --     title = { pre = "", post = ": " },
-            --     lsp_client_name = { pre = "", post = "" },
-            --   },
-            --   timer = {
-            --     progress_enddelay = 500,
-            --     spinner = 1000,
-            --     lsp_client_name_enddelay = 1000000000,
-            --   },
-            --   spinner_symbols = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
-            -- },
             function()
               return require("lsp-progress").progress()
             end,
@@ -147,25 +125,25 @@ return {
             {
               function() return require("noice").api.status.command.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-              color = function() return LazyVim.ui.fg("Statement") end,
+              color = function() return { fg = Snacks.util.color("Statement") } end,
             },
             -- stylua: ignore
             {
               function() return require("noice").api.status.mode.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-              color = function() return LazyVim.ui.fg("Constant") end,
+              color = function() return { fg = Snacks.util.color("Constant") } end,
             },
             -- stylua: ignore
             {
               function() return "  " .. require("dap").status() end,
               cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-              color = function() return LazyVim.ui.fg("Debug") end,
+              color = function() return { fg = Snacks.util.color("Debug") } end,
             },
             -- stylua: ignore
             {
               require("lazy.status").updates,
               cond = require("lazy.status").has_updates,
-              color = function() return LazyVim.ui.fg("Special") end,
+              color = function() return { fg = Snacks.util.color("Special") } end,
             },
             {
               "diff",
@@ -261,6 +239,7 @@ return {
     opts = {
       disabled_filetypes = {
         "NvimTree",
+        "snacks_dashboard",
         "Trouble",
         "checkhealth",
         "dashboard",

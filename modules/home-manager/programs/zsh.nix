@@ -2,7 +2,6 @@
 
 {
   programs.command-not-found.enable = false;
-  # programs.atuin.enable = true;
   programs.zsh = {
     enable = true;
 
@@ -13,9 +12,9 @@
 
     initExtra = ''
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-      if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [ -z "$NOTMUX" ]; then
-        tmux attach -t default 2>/dev/null || tmux new -s default
-      fi
+      # if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [ -z "$NOTMUX" ]; then
+      #   tmux attach -t default 2>/dev/null || tmux new -s default
+      # fi
     '';
 
     shellAliases = {

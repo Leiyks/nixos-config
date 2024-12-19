@@ -7,7 +7,7 @@
 
   home = {
     username = "${user}";
-    homeDirectory = "/Users/${user}";
+    homeDirectory = "/home/${user}";
 
     packages = with pkgs; [
       ### Terminal ###

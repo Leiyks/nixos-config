@@ -12,11 +12,6 @@ let
     inherit system;
     config.allowUnfree = true;
   };
-
-  pkgs_mac = import inputs.nixpkgs {
-    system = "aarch64-darwin";
-    config.allowUnfree = true;
-  };
 in
 {
   laptop =
@@ -65,9 +60,9 @@ in
     in
     (if systemConfiguration == false then
       inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgs_mac;
+        inherit pkgs;
 
-        extraSpecialArgs = { inherit host user; };
+        extraSpecialArgs = { user = "alexandre"; inherit host pkgs; };
 
         modules = [ ./home.nix ./datadog/home.nix ];
       }

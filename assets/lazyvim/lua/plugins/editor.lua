@@ -94,15 +94,25 @@ return {
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
       },
       completion = {
-        list = { selection = "auto_insert" },
+        list = { selection = { auto_insert = true, preselect = false } },
         menu = { border = "rounded" },
         documentation = { window = { border = "rounded" } },
-        signature = { window = { border = "rounded" } },
       },
       -- TODO: Enable when blink is having a new release
-      -- sources = {
-      --   cmdline = { "cmdline", "buffer" },
-      -- },
+      sources = {
+        cmdline = function()
+          local type = vim.fn.getcmdtype()
+          -- Search forward and backward
+          if type == "/" or type == "?" then
+            return { "buffer" }
+          end
+          -- Commands
+          if type == ":" then
+            return { "cmdline" }
+          end
+          return {}
+        end,
+      },
     },
   },
 
@@ -147,6 +157,20 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       inlay_hints = { enabled = false },
+      servers = {
+        clangd = {
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+            "--offset-encoding=utf-16",
+          },
+        },
+      },
     },
   },
 
@@ -155,6 +179,7 @@ return {
     opts = {
       formatters_by_ft = {
         ["json"] = { "jq" },
+        ["c"] = { "clang_format" },
       },
     },
   },

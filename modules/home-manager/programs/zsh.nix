@@ -58,8 +58,8 @@
         { name = "chisui/zsh-nix-shell"; }
         { name = "unixorn/docker-helpers.zshplugin"; }
         { name = "zsh-users/zsh-autosuggestions"; }
-        { name = "se-jaeger/zsh-activate-py-environment"; }
       ];
     };
   };
 }
+

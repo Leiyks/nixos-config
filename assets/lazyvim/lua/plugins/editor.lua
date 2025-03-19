@@ -99,8 +99,9 @@ return {
         documentation = { window = { border = "rounded" } },
       },
       -- TODO: Enable when blink is having a new release
-      sources = {
-        cmdline = function()
+      cmdline = {
+        enabled = true,
+        sources = function()
           local type = vim.fn.getcmdtype()
           -- Search forward and backward
           if type == "/" or type == "?" then
@@ -112,6 +113,10 @@ return {
           end
           return {}
         end,
+        completion = {
+          list = { selection = { auto_insert = true, preselect = false } },
+          menu = { auto_show = true },
+        },
       },
     },
   },

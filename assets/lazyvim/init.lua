@@ -31,13 +31,3 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "LspProgressStatusUpdated",
   callback = require("lualine").refresh,
 })
-
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*",
-  callback = function()
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    if #lines > 0 and lines[#lines] ~= "" then
-      vim.api.nvim_buf_set_lines(0, -1, -1, false, { "" })
-    end
-  end,
-})
